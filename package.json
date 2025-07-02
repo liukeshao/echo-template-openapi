@@ -1,5 +1,5 @@
 {
-  "name": "acme-api",
+  "name": "echo-template-api",
   "version": "1.0.0",
   "dependencies": {
     "@redocly/cli": "1.28.5"
@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "redocly preview-docs",
-    "build": "redocly bundle -o dist/bundle.yaml",
+    "build": "redocly bundle echo-template@v1 -o dist/bundle.yaml",
     "test": "redocly lint"
   }
 }
