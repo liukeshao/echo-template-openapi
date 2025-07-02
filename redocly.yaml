@@ -12,6 +12,8 @@ rules:
 theme:
   openapi:
     htmlTemplate: ./docs/index.html
+    expandResponses: "all"
+    sortPropsAlphabetically: true 
     theme:
       colors:
         primary:
