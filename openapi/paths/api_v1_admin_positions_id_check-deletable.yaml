@@ -1,0 +1,27 @@
+get:
+  tags:
+    - 岗位管理
+  summary: 检查岗位是否可删除
+  description: 检查指定岗位是否可以被删除，返回删除检查结果
+  operationId: checkPositionDeletable
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 岗位ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 检查完成
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput 

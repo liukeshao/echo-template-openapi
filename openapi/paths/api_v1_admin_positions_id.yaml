@@ -1,0 +1,89 @@
+get:
+  tags:
+    - 岗位管理
+  summary: 获取岗位详情
+  description: 根据ID获取岗位详细信息
+  operationId: getPosition
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 岗位ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+
+put:
+  tags:
+    - 岗位管理
+  summary: 更新岗位
+  description: 更新岗位信息
+  operationId: updatePosition
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 岗位ID
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/PositionInput.yaml#/UpdatePositionInput
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+
+delete:
+  tags:
+    - 岗位管理
+  summary: 删除岗位
+  description: 删除指定岗位（逻辑删除）
+  operationId: deletePosition
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 岗位ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    type: 'null' 

@@ -1,0 +1,26 @@
+post:
+  tags:
+    - 岗位管理
+  summary: 批量更新岗位排序
+  description: 批量更新多个岗位的排序顺序
+  operationId: sortPositions
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/PositionInput.yaml#/SortPositionInput
+  responses:
+    '200':
+      description: 排序更新成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    type: 'null' 

@@ -50,7 +50,7 @@ get:
         type: integer
         minimum: 1
         default: 1
-    - name: size
+    - name: page_size
       in: query
       description: 每页数量
       schema:

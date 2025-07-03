@@ -1,0 +1,107 @@
+PositionInfo:
+  type: object
+  properties:
+    id:
+      type: string
+      description: 岗位ID
+      example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    name:
+      type: string
+      description: 岗位名称
+      example: "软件工程师"
+    code:
+      type: string
+      description: 岗位编码
+      example: "SE001"
+    description:
+      type: string
+      description: 岗位描述
+      example: "负责软件系统的设计、开发和维护"
+    sort_order:
+      type: integer
+      description: 排序顺序
+      example: 10
+    status:
+      type: string
+      enum: ["active", "inactive"]
+      description: 岗位状态
+      example: "active"
+    created_at:
+      type: string
+      format: date-time
+      description: 创建时间
+      example: "2023-12-27 15:30:00"
+    updated_at:
+      type: string
+      format: date-time
+      description: 更新时间
+      example: "2023-12-27 16:45:00"
+    user_count:
+      type: integer
+      description: 岗位用户数量
+      example: 5
+
+PositionOutput:
+  allOf:
+    - $ref: '#/PositionInfo'
+
+ListPositionsOutput:
+  allOf:
+    - $ref: PageOutput.yaml
+    - type: object
+      description: 岗位列表输出，继承分页信息
+      required:
+        - positions
+      properties:
+        positions:
+          type: array
+          items:
+            $ref: '#/PositionInfo'
+          description: 岗位列表
+          example:
+            - id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+              name: "软件工程师"
+              code: "SE001"
+              status: "active"
+              sort_order: 10
+              user_count: 5
+
+CheckPositionDeletableOutput:
+  type: object
+  properties:
+    deletable:
+      type: boolean
+      description: 是否可删除
+      example: false
+    reason:
+      type: string
+      description: 不可删除的原因
+      example: "岗位下还有关联用户，无法删除"
+    user_count:
+      type: integer
+      description: 关联用户数
+      example: 3
+
+PositionStatsOutput:
+  type: object
+  properties:
+    total_positions:
+      type: integer
+      description: 总岗位数
+      example: 25
+    active_positions:
+      type: integer
+      description: 启用岗位数
+      example: 20
+    inactive_positions:
+      type: integer
+      description: 停用岗位数
+      example: 5
+    status_breakdown:
+      type: object
+      additionalProperties:
+        type: integer
+      description: 状态分布
+      example:
+        active: 20
+        inactive: 5 

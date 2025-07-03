@@ -1,0 +1,109 @@
+CreatePositionInput:
+  type: object
+  required:
+    - name
+    - code
+  properties:
+    name:
+      type: string
+      maxLength: 100
+      description: 岗位名称
+      example: "软件工程师"
+    code:
+      type: string
+      maxLength: 50
+      description: 岗位编码，全局唯一
+      example: "SE001"
+    description:
+      type: string
+      maxLength: 500
+      description: 岗位描述
+      example: "负责软件系统的设计、开发和维护"
+    sort_order:
+      type: integer
+      default: 0
+      description: 排序顺序，数字越小越靠前
+      example: 10
+    status:
+      type: string
+      enum: ["active", "inactive"]
+      default: "active"
+      description: 岗位状态
+      example: "active"
+
+UpdatePositionInput:
+  type: object
+  properties:
+    name:
+      type: string
+      maxLength: 100
+      description: 岗位名称
+      example: "高级软件工程师"
+    code:
+      type: string
+      maxLength: 50
+      description: 岗位编码
+      example: "SSE001"
+    description:
+      type: string
+      maxLength: 500
+      description: 岗位描述
+      example: "负责核心系统的架构设计和技术攻关"
+    sort_order:
+      type: integer
+      description: 排序顺序
+      example: 5
+    status:
+      type: string
+      enum: ["active", "inactive"]
+      description: 岗位状态
+      example: "active"
+
+ListPositionsInput:
+  type: object
+  properties:
+    page:
+      type: integer
+      minimum: 1
+      default: 1
+      description: 页码
+      example: 1
+    page_size:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 20
+      description: 每页数量
+      example: 20
+    status:
+      type: string
+      enum: ["active", "inactive"]
+      description: 状态筛选
+      example: "active"
+    keyword:
+      type: string
+      description: 搜索关键词，用于搜索岗位名称、编码
+      example: "工程师"
+
+SortPositionInput:
+  type: object
+  required:
+    - position_sorts
+  properties:
+    position_sorts:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        required:
+          - id
+          - sort_order
+        properties:
+          id:
+            type: string
+            description: 岗位ID
+            example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+          sort_order:
+            type: integer
+            description: 排序顺序
+            example: 10 

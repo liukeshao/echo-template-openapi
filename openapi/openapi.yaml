@@ -35,6 +35,8 @@ tags:
     description: 管理员用户管理接口
   - name: 部门管理
     description: 部门增删改查、树形结构管理接口
+  - name: 岗位管理
+    description: 岗位增删改查、排序管理接口
 x-tagGroups:
   - name: 核心功能
     tags:
@@ -44,6 +46,7 @@ x-tagGroups:
     tags:
       - 用户管理
       - 部门管理
+      - 岗位管理
 paths:
   /api/v1/auth/register:
     $ref: paths/api_v1_auth_register.yaml
@@ -197,6 +200,17 @@ paths:
                     properties:
                       data:
                         $ref: components/schemas/CheckDepartmentDeletableOutput.yaml
+  # 岗位管理
+  /api/v1/admin/positions:
+    $ref: paths/api_v1_admin_positions.yaml
+  /api/v1/admin/positions/{id}:
+    $ref: paths/api_v1_admin_positions_id.yaml
+  /api/v1/admin/positions/sort:
+    $ref: paths/api_v1_admin_positions_sort.yaml
+  /api/v1/admin/positions/stats:
+    $ref: paths/api_v1_admin_positions_stats.yaml
+  /api/v1/admin/positions/{id}/check-deletable:
+    $ref: paths/api_v1_admin_positions_id_check-deletable.yaml
 components:
   securitySchemes:
     BearerAuth:
@@ -261,6 +275,25 @@ components:
       $ref: components/schemas/CheckDepartmentDeletableOutput.yaml
     DepartmentStatsOutput:
       $ref: components/schemas/DepartmentStatsOutput.yaml
+    # 岗位管理相关
+    CreatePositionInput:
+      $ref: components/schemas/PositionInput.yaml#/CreatePositionInput
+    UpdatePositionInput:
+      $ref: components/schemas/PositionInput.yaml#/UpdatePositionInput
+    ListPositionsInput:
+      $ref: components/schemas/PositionInput.yaml#/ListPositionsInput
+    SortPositionInput:
+      $ref: components/schemas/PositionInput.yaml#/SortPositionInput
+    PositionInfo:
+      $ref: components/schemas/PositionOutput.yaml#/PositionInfo
+    PositionOutput:
+      $ref: components/schemas/PositionOutput.yaml#/PositionOutput
+    ListPositionsOutput:
+      $ref: components/schemas/PositionOutput.yaml#/ListPositionsOutput
+    CheckPositionDeletableOutput:
+      $ref: components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput
+    PositionStatsOutput:
+      $ref: components/schemas/PositionOutput.yaml#/PositionStatsOutput
     # 通用响应
     Response:
       $ref: components/schemas/Response.yaml

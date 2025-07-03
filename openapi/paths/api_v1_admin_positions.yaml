@@ -1,0 +1,74 @@
+post:
+  tags:
+    - 岗位管理
+  summary: 创建岗位
+  description: 创建新的岗位
+  operationId: createPosition
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/PositionInput.yaml#/CreatePositionInput
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+
+get:
+  tags:
+    - 岗位管理
+  summary: 获取岗位列表
+  description: 分页获取岗位列表，支持筛选和搜索
+  operationId: listPositions
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      description: 页码
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    - name: page_size
+      in: query
+      description: 每页数量
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    - name: status
+      in: query
+      description: 状态筛选
+      schema:
+        type: string
+        enum: ["active", "inactive"]
+    - name: keyword
+      in: query
+      description: 搜索关键词
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/ListPositionsOutput 

@@ -1,0 +1,20 @@
+get:
+  tags:
+    - 岗位管理
+  summary: 获取岗位统计信息
+  description: 获取岗位的统计信息，包括总数量、状态分布等
+  operationId: getPositionStats
+  security:
+    - BearerAuth: []
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/PositionOutput.yaml#/PositionStatsOutput 
