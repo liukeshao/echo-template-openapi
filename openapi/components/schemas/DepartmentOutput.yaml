@@ -1,0 +1,3 @@
+allOf:
+  - $ref: DepartmentInfo.yaml
+description: 部门输出信息，继承DepartmentInfo的所有字段 

@@ -1,0 +1,33 @@
+allOf:
+  - $ref: PageInput.yaml
+  - type: object
+    description: 获取部门列表输入，继承分页参数
+    properties:
+      parent_id:
+        type: [string, 'null']
+        maxLength: 26
+        description: 上级部门ID，空字符串表示获取根级部门，不传表示获取所有层级
+        example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+      
+      status:
+        type: string
+        enum: [active, inactive]
+        description: 部门状态筛选
+        example: "active"
+      
+      level:
+        type: integer
+        minimum: 0
+        description: 层级筛选，0表示根级部门
+        example: 0
+      
+      manager_id:
+        type: string
+        maxLength: 26
+        description: 负责人ID筛选
+        example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+      
+      keyword:
+        type: string
+        description: 搜索关键词，支持搜索部门名称、编码、负责人
+        example: "技术" 

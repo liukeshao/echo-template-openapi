@@ -1,0 +1,29 @@
+type: object
+description: 部门树形结构输出
+required:
+  - departments
+properties:
+  departments:
+    type: array
+    items:
+      $ref: DepartmentInfo.yaml
+    description: 部门树形列表，根级部门作为数组元素，子部门在children字段中
+    example:
+      - id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        parent_id: null
+        name: "技术中心"
+        code: "TECH"
+        status: "active"
+        level: 0
+        path: "/TECH"
+        user_count: 25
+        children:
+          - id: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+            parent_id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+            name: "前端开发组"
+            code: "FRONTEND"
+            status: "active"
+            level: 1
+            path: "/TECH/FRONTEND"
+            user_count: 8
+            children: [] 

@@ -1,0 +1,177 @@
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: 部门ID
+    schema:
+      type: string
+      maxLength: 26
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+
+get:
+  tags:
+    - 部门管理
+  summary: 获取部门详情
+  description: 根据部门ID获取详细信息，包括上级部门信息
+  operationId: getDepartment
+  security:
+    - BearerAuth: []
+  responses:
+    '200':
+      description: 获取部门详情成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/Response.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/DepartmentOutput.yaml'
+          examples:
+            success:
+              summary: 获取成功
+              value:
+                code: 0
+                message: "获取部门详情成功"
+                data:
+                  id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+                  parent_id: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+                  name: "前端开发组"
+                  code: "FRONTEND"
+                  manager: "李四"
+                  manager_id: "01CRZ3NDEKTSV4RRFFQ69G5FAV"
+                  phone: "13800138001"
+                  description: "负责前端技术开发"
+                  sort_order: 1
+                  status: "active"
+                  level: 1
+                  path: "/TECH/FRONTEND"
+                  created_at: "2024-01-01 10:00:00"
+                  updated_at: "2024-01-01 10:00:00"
+                  user_count: 8
+                  parent:
+                    id: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+                    parent_id: null
+                    name: "技术中心"
+                    code: "TECH"
+                    manager: "张三"
+                    manager_id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+                    phone: "13800138000"
+                    description: "负责技术研发工作"
+                    sort_order: 0
+                    status: "active"
+                    level: 0
+                    path: "/TECH"
+                    created_at: "2024-01-01 09:00:00"
+                    updated_at: "2024-01-01 09:00:00"
+                    user_count: 25
+                timestamp: 1704067200000
+                request_id: "req_12345"
+
+put:
+  tags:
+    - 部门管理
+  summary: 更新部门
+  description: 更新部门基本信息，不包括父级关系调整
+  operationId: updateDepartment
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UpdateDepartmentInput.yaml'
+        examples:
+          update_basic_info:
+            summary: 更新基本信息
+            value:
+              name: "前端技术部"
+              manager: "王五"
+              manager_id: "01DRZ3NDEKTSV4RRFFQ69G5FAV"
+              phone: "13800138002"
+              description: "负责前端技术研发和维护"
+          update_status:
+            summary: 更新状态
+            value:
+              status: "inactive"
+  responses:
+    '200':
+      description: 部门更新成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/Response.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/DepartmentOutput.yaml'
+          examples:
+            success:
+              summary: 更新成功
+              value:
+                code: 0
+                message: "部门更新成功"
+                data:
+                  id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+                  parent_id: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+                  name: "前端技术部"
+                  code: "FRONTEND"
+                  manager: "王五"
+                  manager_id: "01DRZ3NDEKTSV4RRFFQ69G5FAV"
+                  phone: "13800138002"
+                  description: "负责前端技术研发和维护"
+                  sort_order: 1
+                  status: "active"
+                  level: 1
+                  path: "/TECH/FRONTEND"
+                  created_at: "2024-01-01 10:00:00"
+                  updated_at: "2024-01-01 11:00:00"
+                  user_count: 8
+                timestamp: 1704070800000
+                request_id: "req_12346"
+
+delete:
+  tags:
+    - 部门管理
+  summary: 删除部门
+  description: 删除部门（逻辑删除），删除前需确保无关联用户和子部门
+  operationId: deleteDepartment
+  security:
+    - BearerAuth: []
+  responses:
+    '200':
+      description: 部门删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/SuccessResponse.yaml'
+          examples:
+            success:
+              summary: 删除成功
+              value:
+                code: 0
+                message: "部门删除成功"
+                data: null
+                timestamp: 1704067200000
+                request_id: "req_12347"
+            error_has_users:
+              summary: 删除失败 - 有关联用户
+              value:
+                code: 400
+                message: "无法删除：部门下还有 5 个用户"
+                data: null
+                errors: ["部门下还有关联用户，请先转移用户后再删除"]
+                timestamp: 1704067200000
+                request_id: "req_12348"
+            error_has_children:
+              summary: 删除失败 - 有子部门
+              value:
+                code: 400
+                message: "无法删除：部门下还有 2 个子部门"
+                data: null
+                errors: ["部门下还有子部门，请先删除子部门"]
+                timestamp: 1704067200000
+                request_id: "req_12349" 

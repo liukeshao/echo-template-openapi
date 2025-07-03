@@ -1,0 +1,33 @@
+type: object
+description: 检查部门是否可删除输出
+required:
+  - deletable
+  - reason
+  - user_count
+  - children_count
+properties:
+  deletable:
+    type: boolean
+    description: 是否可删除
+    example: false
+  
+  reason:
+    type: string
+    description: 不可删除的原因，可删除时为空字符串
+    example: "无法删除：部门下还有 5 个用户，2 个子部门"
+  
+  user_count:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 关联用户数量
+    example: 5
+  
+  children_count:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 子部门数量
+    example: 2
+
+ 

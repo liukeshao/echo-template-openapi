@@ -1,0 +1,56 @@
+type: object
+description: 更新部门输入，所有字段均为可选
+properties:
+  name:
+    type: string
+    maxLength: 100
+    minLength: 1
+    description: 部门名称
+    example: "技术研发中心"
+  
+  code:
+    type: string
+    maxLength: 50
+    minLength: 1
+    description: 部门编码，全局唯一
+    example: "TECH_DEV"
+  
+  manager:
+    type: [string, 'null']
+    maxLength: 100
+    description: 部门负责人姓名，传空字符串表示清空
+    example: "王五"
+  
+  manager_id:
+    type: [string, 'null']
+    maxLength: 26
+    description: 负责人用户ID，传空字符串表示清空
+    example: "01DRZ3NDEKTSV4RRFFQ69G5FAV"
+  
+  phone:
+    type: [string, 'null']
+    maxLength: 20
+    description: 部门联系电话，传空字符串表示清空
+    example: "13800138002"
+  
+  description:
+    type: [string, 'null']
+    maxLength: 500
+    description: 部门描述，传空字符串表示清空
+    example: "负责技术研发和创新工作"
+  
+  sort_order:
+    type: integer
+    description: 排序顺序，数字越小越靠前
+    example: 1
+  
+  status:
+    type: string
+    enum: [active, inactive]
+    description: |
+      部门状态：
+      - active: 启用
+      - inactive: 停用
+    example: "active"
+
+ 

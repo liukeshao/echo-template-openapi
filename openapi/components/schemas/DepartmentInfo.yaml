@@ -1,0 +1,128 @@
+type: object
+description: 部门信息
+required:
+  - id
+  - name
+  - code
+  - sort_order
+  - status
+  - level
+  - path
+  - created_at
+  - updated_at
+  - user_count
+properties:
+  id:
+    type: string
+    maxLength: 26
+    minLength: 26
+    description: 部门ID（ULID格式）
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+  
+  parent_id:
+    type: [string, 'null']
+    maxLength: 26
+    description: 上级部门ID，根级部门为null
+    example: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+  
+  name:
+    type: string
+    maxLength: 100
+    minLength: 1
+    description: 部门名称
+    example: "技术中心"
+  
+  code:
+    type: string
+    maxLength: 50
+    minLength: 1
+    description: 部门编码，全局唯一
+    example: "TECH"
+  
+  manager:
+    type: [string, 'null']
+    maxLength: 100
+    description: 部门负责人姓名
+    example: "张三"
+  
+  manager_id:
+    type: [string, 'null']
+    maxLength: 26
+    description: 负责人用户ID
+    example: "01CRZ3NDEKTSV4RRFFQ69G5FAV"
+  
+  phone:
+    type: [string, 'null']
+    maxLength: 20
+    description: 部门联系电话
+    example: "13800138000"
+  
+  description:
+    type: [string, 'null']
+    maxLength: 500
+    description: 部门描述
+    example: "负责公司技术研发和技术管理工作"
+  
+  sort_order:
+    type: integer
+    description: 排序顺序，数字越小越靠前
+    example: 0
+  
+  status:
+    type: string
+    enum: [active, inactive]
+    description: |
+      部门状态：
+      - active: 启用
+      - inactive: 停用
+    example: "active"
+  
+  level:
+    type: integer
+    minimum: 0
+    description: 部门层级深度，根节点为0
+    example: 0
+  
+  path:
+    type: string
+    maxLength: 1000
+    description: 部门全路径，格式：/root/parent/current
+    example: "/TECH"
+  
+  created_at:
+    type: string
+    format: date-time
+    description: 创建时间
+    example: "2024-01-01 10:00:00"
+  
+  updated_at:
+    type: string
+    format: date-time
+    description: 更新时间
+    example: "2024-01-01 10:00:00"
+  
+  user_count:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 部门用户数量
+    example: 15
+  
+  children:
+    type: array
+    items:
+      $ref: DepartmentInfo.yaml
+    description: 子部门列表（树形结构时使用）
+    example: []
+  
+  parent:
+    anyOf:
+      - $ref: DepartmentInfo.yaml
+      - type: 'null'
+    description: 上级部门信息（获取详情时返回）
+  
+  manager_info:
+    anyOf:
+      - $ref: UserInfo.yaml
+      - type: 'null'
+    description: 负责人信息（包含负责人详情时返回） 

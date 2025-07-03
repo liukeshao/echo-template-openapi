@@ -1,0 +1,8 @@
+type: object
+description: 移动部门输入
+properties:
+  parent_id:
+    type: [string, 'null']
+    maxLength: 26
+    description: 新的上级部门ID，传null表示移动到根级
+    example: "01BRZ3NDEKTSV4RRFFQ69G5FAV" 

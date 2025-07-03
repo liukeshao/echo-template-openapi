@@ -1,0 +1,31 @@
+type: object
+description: 部门排序输入
+required:
+  - department_sorts
+properties:
+  department_sorts:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+        - id
+        - sort_order
+      properties:
+        id:
+          type: string
+          maxLength: 26
+          description: 部门ID
+          example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        sort_order:
+          type: integer
+          description: 新的排序顺序
+          example: 1
+    description: 部门排序列表，按新的顺序排列
+    example:
+      - id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        sort_order: 0
+      - id: "01BRZ3NDEKTSV4RRFFQ69G5FAV"
+        sort_order: 1
+      - id: "01CRZ3NDEKTSV4RRFFQ69G5FAV"
+        sort_order: 2 

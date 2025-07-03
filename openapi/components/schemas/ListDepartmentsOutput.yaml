@@ -1,0 +1,23 @@
+allOf:
+  - $ref: PageOutput.yaml
+  - type: object
+    description: 部门列表输出，继承分页信息
+    required:
+      - departments
+    properties:
+      departments:
+        type: array
+        items:
+          $ref: DepartmentInfo.yaml
+        description: 部门列表
+        example:
+          - id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+            parent_id: null
+            name: "技术中心"
+            code: "TECH"
+            manager: "张三"
+            manager_id: "01CRZ3NDEKTSV4RRFFQ69G5FAV"
+            status: "active"
+            level: 0
+            path: "/TECH"
+            user_count: 15 

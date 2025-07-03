@@ -1,0 +1,67 @@
+type: object
+description: 部门统计输出
+required:
+  - total_departments
+  - active_departments
+  - inactive_departments
+  - status_breakdown
+  - level_stats
+properties:
+  total_departments:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 总部门数
+    example: 15
+  
+  active_departments:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 启用部门数
+    example: 12
+  
+  inactive_departments:
+    type: integer
+    format: int64
+    minimum: 0
+    description: 停用部门数
+    example: 3
+  
+  status_breakdown:
+    type: object
+    additionalProperties:
+      type: integer
+      format: int64
+    description: 状态分布统计
+    example:
+      active: 12
+      inactive: 3
+  
+  level_stats:
+    type: array
+    items:
+      type: object
+      required:
+        - level
+        - department_count
+      properties:
+        level:
+          type: integer
+          minimum: 0
+          description: 层级
+          example: 0
+        department_count:
+          type: integer
+          format: int64
+          minimum: 0
+          description: 该层级的部门数量
+          example: 3
+    description: 层级统计
+    example:
+      - level: 0
+        department_count: 3
+      - level: 1
+        department_count: 8
+      - level: 2
+        department_count: 4 
