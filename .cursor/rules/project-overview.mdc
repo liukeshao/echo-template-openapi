@@ -1,0 +1,51 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Echo Template OpenAPI 项目概览
+
+这是一个基于 Echo 框架的 OpenAPI 模板项目，用于快速构建规范化的 REST API 文档。
+
+## 🏗️ 项目结构
+
+### 核心文件
+- **主 OpenAPI 规范**: [openapi.yaml](mdc:openapi/openapi.yaml) - API 的主要定义文件
+- **项目配置**: [package.json](mdc:package.json) - Node.js 依赖和脚本
+- **Redocly 配置**: [redocly.yaml](mdc:redocly.yaml) - 文档生成工具配置
+- **项目说明**: [README.md](mdc:README.md) - 完整的使用指南
+
+### 目录组织
+- **`openapi/`** - OpenAPI 规范文件的主目录
+  - **`paths/`** - API 路径定义文件
+  - **`components/schemas/`** - 数据模型定义
+  - **`components/responses/`** - 响应模板
+  - **`components/headers/`** - HTTP 头部定义
+- **`docs/`** - 生成的文档静态文件
+- **`openapi/code_samples/`** - 各种编程语言的示例代码
+
+## 🎯 核心功能模块
+
+### 认证管理 (`/api/v1/auth/*`)
+- **注册**: [api_v1_auth_register.yaml](mdc:openapi/paths/api_v1_auth_register.yaml)
+- **登录**: [api_v1_auth_login.yaml](mdc:openapi/paths/api_v1_auth_login.yaml)
+- **刷新令牌**: [api_v1_auth_refresh.yaml](mdc:openapi/paths/api_v1_auth_refresh.yaml)
+- **登出**: [api_v1_auth_logout.yaml](mdc:openapi/paths/api_v1_auth_logout.yaml)
+
+### 用户管理 (`/api/v1/users/*`)
+- **用户信息**: [api_v1_users_me.yaml](mdc:openapi/paths/api_v1_users_me.yaml)
+- **修改密码**: [api_v1_users_me_change-password.yaml](mdc:openapi/paths/api_v1_users_me_change-password.yaml)
+- **用户列表**: [api_v1_users.yaml](mdc:openapi/paths/api_v1_users.yaml)
+
+## 🔧 常用命令
+```bash
+npm start      # 启动文档预览服务器
+npm run build  # 构建 API 文档到 dist/ 目录
+npm test       # 验证 OpenAPI 规范
+```
+
+## 📋 响应格式标准
+- HTTP 状态码统一为 200
+- 通过 `code` 字段区分成功/失败
+- `code = 0` 表示成功，`code != 0` 表示失败
+- 详细格式参见 [Response.yaml](mdc:openapi/components/schemas/Response.yaml)
