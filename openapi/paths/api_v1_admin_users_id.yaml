@@ -1,0 +1,102 @@
+get:
+  operationId: getUser
+  tags:
+    - 用户管理
+  summary: 获取用户详情
+  description: 根据用户ID获取用户详细信息
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 用户ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "操作成功"
+              data:
+                $ref: '../components/schemas/UserOutput.yaml'
+              timestamp:
+                type: integer
+                format: int64
+              request_id:
+                type: string
+
+put:
+  operationId: updateUser
+  tags:
+    - 用户管理
+  summary: 更新用户信息
+  description: 管理员更新用户信息
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 用户ID
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UpdateUserInput.yaml'
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "操作成功"
+              data:
+                $ref: '../components/schemas/UserOutput.yaml'
+              timestamp:
+                type: integer
+                format: int64
+              request_id:
+                type: string
+
+delete:
+  operationId: deleteUser
+  tags:
+    - 用户管理
+  summary: 删除用户
+  description: 逻辑删除用户账号，需要二次确认
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 用户ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/SuccessResponse.yaml' 

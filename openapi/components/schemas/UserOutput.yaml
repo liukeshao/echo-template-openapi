@@ -1,0 +1,3 @@
+allOf:
+  - $ref: 'UserInfo.yaml'
+description: 用户输出信息 

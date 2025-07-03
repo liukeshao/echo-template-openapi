@@ -1,0 +1,64 @@
+type: object
+required:
+  - username
+  - email
+  - password
+properties:
+  username:
+    type: string
+    minLength: 3
+    maxLength: 50
+    description: 用户名
+    example: john_doe
+  email:
+    type: string
+    format: email
+    description: 用户邮箱
+    example: john@example.com
+  password:
+    type: string
+    minLength: 8
+    description: 密码
+    example: secretpassword123
+  real_name:
+    type: string
+    maxLength: 100
+    description: 真实姓名
+    example: 张三
+  phone:
+    type: string
+    maxLength: 20
+    description: 手机号
+    example: 13812345678
+  department:
+    type: string
+    maxLength: 100
+    description: 所属部门
+    example: 技术部
+  position:
+    type: string
+    maxLength: 100
+    description: 岗位
+    example: 软件工程师
+  roles:
+    type: array
+    items:
+      type: string
+    description: 用户角色列表
+    example: ["user"]
+  status:
+    type: string
+    enum:
+      - active
+      - inactive
+      - suspended
+    description: 用户状态，默认为active
+    example: active
+  force_change_password:
+    type: boolean
+    description: 是否强制修改密码，默认为false
+    example: false
+  allow_multi_login:
+    type: boolean
+    description: 是否允许多端登录，默认为true
+    example: true 

@@ -1,0 +1,28 @@
+allOf:
+  - $ref: 'PageInput.yaml'
+  - type: object
+    properties:
+      status:
+        type: string
+        enum:
+          - active
+          - inactive
+          - suspended
+        description: 用户状态筛选
+        example: active
+      department:
+        type: string
+        description: 部门筛选
+        example: 技术部
+      position:
+        type: string
+        description: 岗位筛选
+        example: 软件工程师
+      role:
+        type: string
+        description: 角色筛选
+        example: admin
+      keyword:
+        type: string
+        description: 关键词搜索（用户名、邮箱、真实姓名、手机号）
+        example: john 

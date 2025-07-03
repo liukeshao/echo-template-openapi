@@ -1,0 +1,107 @@
+post:
+  operationId: createUser
+  tags:
+    - 用户管理
+  summary: 创建用户
+  description: 管理员创建新用户账号
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/CreateUserInput.yaml'
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "操作成功"
+              data:
+                $ref: '../components/schemas/UserOutput.yaml'
+              timestamp:
+                type: integer
+                format: int64
+              request_id:
+                type: string
+
+get:
+  operationId: listUsers
+  tags:
+    - 用户管理
+  summary: 获取用户列表
+  description: 分页获取用户列表，支持多种筛选条件
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      description: 页码，从1开始
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    - name: size
+      in: query
+      description: 每页数量
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    - name: status
+      in: query
+      description: 用户状态筛选
+      schema:
+        type: string
+        enum: [active, inactive, suspended]
+    - name: department
+      in: query
+      description: 部门筛选
+      schema:
+        type: string
+    - name: position
+      in: query
+      description: 岗位筛选
+      schema:
+        type: string
+    - name: role
+      in: query
+      description: 角色筛选
+      schema:
+        type: string
+    - name: keyword
+      in: query
+      description: 关键词搜索（用户名、邮箱、姓名、手机号）
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: "操作成功"
+              data:
+                $ref: '../components/schemas/ListUsersOutput.yaml'
+              timestamp:
+                type: integer
+                format: int64
+              request_id:
+                type: string 
