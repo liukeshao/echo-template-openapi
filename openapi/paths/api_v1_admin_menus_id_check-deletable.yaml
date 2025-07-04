@@ -1,0 +1,26 @@
+get:
+  summary: 检查菜单是否可删除
+  operationId: checkMenuDeletable
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: 菜单ID
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 检查完成
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/CheckMenuDeletableOutput.yaml 

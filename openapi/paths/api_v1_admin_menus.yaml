@@ -1,0 +1,72 @@
+post:
+  summary: 创建菜单
+  operationId: createMenu
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/CreateMenuInput.yaml'
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/Response.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/MenuOutput.yaml'
+
+get:
+  summary: 获取菜单列表
+  operationId: listMenus
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: type
+      in: query
+      description: 菜单类型筛选
+      required: false
+      schema:
+        type: string
+        enum: ["directory", "menu", "button"]
+    - name: parent_id
+      in: query
+      description: 上级菜单ID筛选，"null"表示查询顶级菜单
+      required: false
+      schema:
+        type: string
+    - name: status
+      in: query
+      description: 状态筛选
+      required: false
+      schema:
+        type: string
+        enum: ["enabled", "disabled"]
+    - name: keyword
+      in: query
+      description: 关键词搜索（名称、权限标识）
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 查询成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/Response.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/ListMenusOutput.yaml' 

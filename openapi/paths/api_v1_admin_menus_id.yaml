@@ -1,0 +1,81 @@
+get:
+  summary: 获取菜单详情
+  operationId: getMenu
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: 菜单ID
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 查询成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/MenuOutput.yaml
+
+put:
+  summary: 更新菜单
+  operationId: updateMenu
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: 菜单ID
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/UpdateMenuInput.yaml
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/MenuOutput.yaml
+
+delete:
+  summary: 删除菜单
+  operationId: deleteMenu
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: 菜单ID
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SuccessResponse.yaml 

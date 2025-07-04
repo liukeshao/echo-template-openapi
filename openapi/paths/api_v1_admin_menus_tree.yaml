@@ -1,0 +1,40 @@
+get:
+  summary: 获取菜单树
+  operationId: getMenuTree
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: type
+      in: query
+      description: 菜单类型筛选
+      required: false
+      schema:
+        type: string
+        enum: ["directory", "menu", "button"]
+    - name: status
+      in: query
+      description: 状态筛选
+      required: false
+      schema:
+        type: string
+        enum: ["enabled", "disabled"]
+    - name: keyword
+      in: query
+      description: 关键词搜索（名称、权限标识）
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 查询成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../components/schemas/Response.yaml
+              - type: object
+                properties:
+                  data:
+                    $ref: ../components/schemas/MenuTreeOutput.yaml 

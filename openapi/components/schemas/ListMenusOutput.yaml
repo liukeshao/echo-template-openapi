@@ -1,0 +1,10 @@
+type: object
+description: 菜单列表输出
+properties:
+  menus:
+    type: array
+    description: 菜单列表
+    items:
+      $ref: './MenuInfo.yaml'
+required:
+  - menus 

@@ -1,0 +1,20 @@
+post:
+  summary: 菜单排序
+  operationId: sortMenus
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/SortMenuInput.yaml
+  responses:
+    '200':
+      description: 排序成功
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SuccessResponse.yaml 

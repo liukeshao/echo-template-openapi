@@ -1,0 +1,27 @@
+post:
+  summary: 移动菜单
+  operationId: moveMenu
+  tags:
+    - 菜单管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: 菜单ID
+      required: true
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/MoveMenuInput.yaml
+  responses:
+    '200':
+      description: 移动成功
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SuccessResponse.yaml 

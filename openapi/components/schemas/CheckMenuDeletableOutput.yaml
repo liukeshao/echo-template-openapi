@@ -1,0 +1,16 @@
+type: object
+description: 检查菜单是否可删除输出
+properties:
+  deletable:
+    type: boolean
+    description: 是否可删除
+    example: true
+  reasons:
+    type: array
+    description: 不可删除的原因列表
+    items:
+      type: string
+    example: ["存在子菜单"]
+required:
+  - deletable
+  - reasons 

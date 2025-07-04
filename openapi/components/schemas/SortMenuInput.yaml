@@ -1,0 +1,23 @@
+type: object
+description: 菜单排序输入
+properties:
+  menu_items:
+    type: array
+    description: 菜单排序项列表
+    minItems: 1
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 菜单ID
+          example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        sort_order:
+          type: integer
+          description: 新的排序号
+          example: 1
+      required:
+        - id
+        - sort_order
+required:
+  - menu_items 

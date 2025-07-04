@@ -1,0 +1,73 @@
+type: object
+description: 创建菜单输入
+properties:
+  name:
+    type: string
+    description: 菜单名称
+    minLength: 1
+    maxLength: 100
+    example: "用户管理"
+  type:
+    type: string
+    description: 菜单类型
+    enum: ["directory", "menu", "button"]
+    example: "menu"
+  parent_id:
+    type: ["string", "null"]
+    description: 上级菜单ID，为null表示顶级菜单
+    maxLength: 26
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAQ"
+  path:
+    type: ["string", "null"]
+    description: 路由地址，菜单类型时必填
+    maxLength: 255
+    example: "/system/user"
+  component:
+    type: ["string", "null"]
+    description: 组件路径，菜单类型时必填
+    maxLength: 255
+    example: "views/system/user/index.vue"
+  icon:
+    type: ["string", "null"]
+    description: 菜单图标
+    maxLength: 100
+    example: "user"
+  sort_order:
+    type: integer
+    description: 排序号，数字越小越靠前
+    default: 0
+    example: 1
+  permission:
+    type: ["string", "null"]
+    description: 权限标识，按钮类型时必填，格式如：system:user:add
+    maxLength: 255
+    example: "system:user:add"
+  status:
+    type: string
+    description: 菜单状态
+    enum: ["enabled", "disabled"]
+    default: "enabled"
+    example: "enabled"
+  visible:
+    type: boolean
+    description: 是否在菜单中显示
+    default: true
+    example: true
+  keep_alive:
+    type: boolean
+    description: 是否缓存页面（仅对菜单类型有效）
+    default: false
+    example: false
+  external_link:
+    type: ["string", "null"]
+    description: 外部链接地址，如果设置则点击菜单跳转到外部链接
+    maxLength: 500
+    example: "https://example.com"
+  remark:
+    type: ["string", "null"]
+    description: 菜单备注
+    maxLength: 500
+    example: "用户管理页面"
+required:
+  - name
+  - type 

@@ -1,0 +1,66 @@
+type: object
+description: 更新菜单输入
+properties:
+  name:
+    type: ["string", "null"]
+    description: 菜单名称
+    minLength: 1
+    maxLength: 100
+    example: "用户管理"
+  type:
+    type: ["string", "null"]
+    description: 菜单类型
+    enum: ["directory", "menu", "button"]
+    example: "menu"
+  parent_id:
+    type: ["string", "null"]
+    description: 上级菜单ID，为空字符串表示移动到根级
+    maxLength: 26
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAQ"
+  path:
+    type: ["string", "null"]
+    description: 路由地址
+    maxLength: 255
+    example: "/system/user"
+  component:
+    type: ["string", "null"]
+    description: 组件路径
+    maxLength: 255
+    example: "views/system/user/index.vue"
+  icon:
+    type: ["string", "null"]
+    description: 菜单图标
+    maxLength: 100
+    example: "user"
+  sort_order:
+    type: ["integer", "null"]
+    description: 排序号，数字越小越靠前
+    example: 1
+  permission:
+    type: ["string", "null"]
+    description: 权限标识
+    maxLength: 255
+    example: "system:user:add"
+  status:
+    type: ["string", "null"]
+    description: 菜单状态
+    enum: ["enabled", "disabled"]
+    example: "enabled"
+  visible:
+    type: ["boolean", "null"]
+    description: 是否在菜单中显示
+    example: true
+  keep_alive:
+    type: ["boolean", "null"]
+    description: 是否缓存页面
+    example: false
+  external_link:
+    type: ["string", "null"]
+    description: 外部链接地址
+    maxLength: 500
+    example: "https://example.com"
+  remark:
+    type: ["string", "null"]
+    description: 菜单备注
+    maxLength: 500
+    example: "用户管理页面" 

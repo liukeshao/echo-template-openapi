@@ -1,0 +1,86 @@
+type: object
+description: 菜单信息
+properties:
+  id:
+    type: string
+    description: 菜单ID
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+  name:
+    type: string
+    description: 菜单名称
+    example: "用户管理"
+  type:
+    type: string
+    description: 菜单类型
+    enum: ["directory", "menu", "button"]
+    example: "menu"
+  parent_id:
+    type: ["string", "null"]
+    description: 上级菜单ID，为null表示顶级菜单
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAQ"
+  path:
+    type: ["string", "null"]
+    description: 路由地址
+    example: "/system/user"
+  component:
+    type: ["string", "null"]
+    description: 组件路径
+    example: "views/system/user/index.vue"
+  icon:
+    type: ["string", "null"]
+    description: 菜单图标
+    example: "user"
+  sort_order:
+    type: integer
+    description: 排序号，数字越小越靠前
+    example: 1
+  permission:
+    type: ["string", "null"]
+    description: 权限标识，按钮类型时必填
+    example: "system:user:add"
+  status:
+    type: string
+    description: 菜单状态
+    enum: ["enabled", "disabled"]
+    example: "enabled"
+  visible:
+    type: boolean
+    description: 是否在菜单中显示
+    example: true
+  keep_alive:
+    type: boolean
+    description: 是否缓存页面（仅对菜单类型有效）
+    example: false
+  external_link:
+    type: ["string", "null"]
+    description: 外部链接地址
+    example: "https://example.com"
+  remark:
+    type: ["string", "null"]
+    description: 菜单备注
+    example: "用户管理页面"
+  created_at:
+    type: string
+    format: date-time
+    description: 创建时间
+    example: "2023-12-01T10:00:00Z"
+  updated_at:
+    type: string
+    format: date-time
+    description: 更新时间
+    example: "2023-12-01T10:00:00Z"
+  children:
+    type: array
+    description: 子菜单列表
+    items:
+      $ref: './MenuInfo.yaml'
+required:
+  - id
+  - name
+  - type
+  - sort_order
+  - status
+  - visible
+  - keep_alive
+  - created_at
+  - updated_at 

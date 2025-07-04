@@ -1,0 +1,10 @@
+type: object
+description: 菜单树输出
+properties:
+  tree:
+    type: array
+    description: 菜单树
+    items:
+      $ref: './MenuInfo.yaml'
+required:
+  - tree 

@@ -1,0 +1,8 @@
+type: object
+description: 移动菜单输入
+properties:
+  parent_id:
+    type: ["string", "null"]
+    description: 新的上级菜单ID，null表示移动到根级
+    maxLength: 26
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAQ" 

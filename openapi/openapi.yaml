@@ -37,6 +37,8 @@ tags:
     description: 部门增删改查、树形结构管理接口
   - name: 岗位管理
     description: 岗位增删改查、排序管理接口
+  - name: 菜单管理
+    description: 菜单树形管理、权限标识、状态管理接口
 x-tagGroups:
   - name: 核心功能
     tags:
@@ -47,6 +49,7 @@ x-tagGroups:
       - 用户管理
       - 部门管理
       - 岗位管理
+      - 菜单管理
 paths:
   /api/v1/auth/register:
     $ref: paths/api_v1_auth_register.yaml
@@ -211,6 +214,19 @@ paths:
     $ref: paths/api_v1_admin_positions_stats.yaml
   /api/v1/admin/positions/{id}/check-deletable:
     $ref: paths/api_v1_admin_positions_id_check-deletable.yaml
+  # 菜单管理
+  /api/v1/admin/menus:
+    $ref: paths/api_v1_admin_menus.yaml
+  /api/v1/admin/menus/{id}:
+    $ref: paths/api_v1_admin_menus_id.yaml
+  /api/v1/admin/menus/tree:
+    $ref: paths/api_v1_admin_menus_tree.yaml
+  /api/v1/admin/menus/{id}/check-deletable:
+    $ref: paths/api_v1_admin_menus_id_check-deletable.yaml
+  /api/v1/admin/menus/sort:
+    $ref: paths/api_v1_admin_menus_sort.yaml
+  /api/v1/admin/menus/{id}/move:
+    $ref: paths/api_v1_admin_menus_id_move.yaml
 components:
   securitySchemes:
     BearerAuth:
@@ -294,6 +310,25 @@ components:
       $ref: components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput
     PositionStatsOutput:
       $ref: components/schemas/PositionOutput.yaml#/PositionStatsOutput
+    # 菜单管理相关
+    MenuInfo:
+      $ref: components/schemas/MenuInfo.yaml
+    CreateMenuInput:
+      $ref: components/schemas/CreateMenuInput.yaml
+    UpdateMenuInput:
+      $ref: components/schemas/UpdateMenuInput.yaml
+    MenuOutput:
+      $ref: components/schemas/MenuOutput.yaml
+    ListMenusOutput:
+      $ref: components/schemas/ListMenusOutput.yaml
+    MenuTreeOutput:
+      $ref: components/schemas/MenuTreeOutput.yaml
+    SortMenuInput:
+      $ref: components/schemas/SortMenuInput.yaml
+    MoveMenuInput:
+      $ref: components/schemas/MoveMenuInput.yaml
+    CheckMenuDeletableOutput:
+      $ref: components/schemas/CheckMenuDeletableOutput.yaml
     # 通用响应
     Response:
       $ref: components/schemas/Response.yaml
