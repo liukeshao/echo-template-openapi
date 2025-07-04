@@ -1,0 +1,36 @@
+type: object
+required:
+  - code
+  - message
+  - data
+  - timestamp
+properties:
+  code:
+    type: integer
+    description: 错误状态码，非0表示失败
+    example: 1001
+  message:
+    type: string
+    description: 错误消息
+    example: "请求参数格式错误"
+  data:
+    type:
+      - object
+      - 'null'
+    description: 错误详情数据
+    example: null
+  errors:
+    type: array
+    items:
+      type: string
+    description: 错误详情列表
+    example: ["用户名不能为空", "密码长度不能少于8位"]
+  timestamp:
+    type: integer
+    format: int64
+    description: 响应时间戳
+    example: 1641024000
+  request_id:
+    type: string
+    description: 请求ID
+    example: req_123 

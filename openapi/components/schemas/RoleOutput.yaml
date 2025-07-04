@@ -1,0 +1,64 @@
+type: object
+properties:
+  id:
+    type: string
+    description: 角色ID
+    example: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+  name:
+    type: string
+    description: 角色名称
+    example: "系统管理员"
+  code:
+    type: string
+    description: 角色编码
+    example: "admin"
+  description:
+    type: string
+    description: 角色描述
+    example: "系统管理员角色，拥有所有权限"
+  status:
+    type: string
+    description: 角色状态
+    enum: [enabled, disabled]
+    example: "enabled"
+  data_scope:
+    type: string
+    description: 数据权限范围
+    enum: [all, dept_sub, dept, self, custom]
+    example: "all"
+  dept_ids:
+    type: array
+    description: 自定义部门权限ID列表
+    items:
+      type: string
+    example: ["01ARZ3NDEKTSV4RRFFQ69G5FAV"]
+  is_builtin:
+    type: boolean
+    description: 是否为系统内置角色
+    example: true
+  sort_order:
+    type: integer
+    description: 排序顺序
+    example: 1
+  remark:
+    type: string
+    description: 角色备注
+    example: "管理员角色备注"
+  user_count:
+    type: integer
+    description: 拥有此角色的用户数量
+    example: 5
+  menu_count:
+    type: integer
+    description: 分配的菜单数量
+    example: 15
+  created_at:
+    type: string
+    format: date-time
+    description: 创建时间
+    example: "2023-01-01T00:00:00Z"
+  updated_at:
+    type: string
+    format: date-time
+    description: 更新时间
+    example: "2023-01-01T00:00:00Z" 

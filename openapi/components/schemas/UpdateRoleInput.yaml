@@ -1,0 +1,50 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 角色名称
+    minLength: 1
+    maxLength: 100
+    example: "系统管理员"
+  code:
+    type: string
+    description: 角色编码，全局唯一
+    minLength: 1
+    maxLength: 50
+    example: "admin"
+  description:
+    type: string
+    description: 角色描述
+    maxLength: 500
+    example: "系统管理员角色，拥有所有权限"
+  status:
+    type: string
+    description: 角色状态
+    enum: [enabled, disabled]
+    example: "enabled"
+  data_scope:
+    type: string
+    description: 数据权限范围
+    enum: [all, dept_sub, dept, self, custom]
+    example: "all"
+  dept_ids:
+    type: array
+    description: 自定义部门权限ID列表，当data_scope为custom时使用
+    items:
+      type: string
+    example: ["01ARZ3NDEKTSV4RRFFQ69G5FAV"]
+  menu_ids:
+    type: array
+    description: 菜单权限ID列表
+    items:
+      type: string
+    example: ["01ARZ3NDEKTSV4RRFFQ69G5FAV", "01ARZ3NDEKTSV4RRFFQ69G5FAW"]
+  sort_order:
+    type: integer
+    description: 排序顺序，数字越小越靠前
+    example: 1
+  remark:
+    type: string
+    description: 角色备注
+    maxLength: 500
+    example: "管理员角色备注" 

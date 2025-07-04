@@ -1,0 +1,31 @@
+type: object
+properties:
+  roles:
+    type: array
+    description: 角色列表
+    items:
+      $ref: './RoleOutput.yaml'
+  page:
+    type: integer
+    description: 当前页码
+    example: 1
+  page_size:
+    type: integer
+    description: 每页数量
+    example: 20
+  total:
+    type: integer
+    description: 总数
+    example: 100
+  total_page:
+    type: integer
+    description: 总页数
+    example: 5
+  has_next:
+    type: boolean
+    description: 是否有下一页
+    example: true
+  has_prev:
+    type: boolean
+    description: 是否有上一页
+    example: false 

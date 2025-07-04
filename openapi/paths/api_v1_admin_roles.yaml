@@ -1,0 +1,99 @@
+get:
+  summary: 获取角色列表
+  description: 分页获取角色列表，支持按状态、数据权限范围筛选和关键词搜索
+  operationId: listRoles
+  tags:
+    - 角色管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      description: 页码
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    - name: page_size
+      in: query
+      description: 每页数量
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    - name: status
+      in: query
+      description: 角色状态筛选
+      required: false
+      schema:
+        type: string
+        enum: [enabled, disabled]
+    - name: data_scope
+      in: query
+      description: 数据权限范围筛选
+      required: false
+      schema:
+        type: string
+        enum: [all, dept_sub, dept, self, custom]
+    - name: keyword
+      in: query
+      description: 搜索关键词（角色名称、编码）
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/SuccessResponse.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/ListRolesOutput.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '401':
+      $ref: '../components/responses/Problem.yaml'
+    '500':
+      $ref: '../components/responses/Problem.yaml'
+
+post:
+  summary: 创建角色
+  description: 创建新的角色，包括基本信息和权限配置
+  operationId: createRole
+  tags:
+    - 角色管理
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/CreateRoleInput.yaml'
+  responses:
+    '200':
+      description: 创建成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/SuccessResponse.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/RoleOutput.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '401':
+      $ref: '../components/responses/Problem.yaml'
+    '409':
+      $ref: '../components/responses/Problem.yaml'
+    '500':
+      $ref: '../components/responses/Problem.yaml' 

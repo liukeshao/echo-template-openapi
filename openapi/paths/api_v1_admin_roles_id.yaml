@@ -1,0 +1,112 @@
+get:
+  summary: 获取角色详情
+  description: 根据角色ID获取角色详细信息
+  operationId: getRole
+  tags:
+    - 角色管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 角色ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 获取成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/SuccessResponse.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/RoleOutput.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '401':
+      $ref: '../components/responses/Problem.yaml'
+    '404':
+      $ref: '../components/responses/Problem.yaml'
+    '500':
+      $ref: '../components/responses/Problem.yaml'
+
+put:
+  summary: 更新角色
+  description: 更新角色信息和权限配置
+  operationId: updateRole
+  tags:
+    - 角色管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 角色ID
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/UpdateRoleInput.yaml'
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../components/schemas/SuccessResponse.yaml'
+              - type: object
+                properties:
+                  data:
+                    $ref: '../components/schemas/RoleOutput.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '401':
+      $ref: '../components/responses/Problem.yaml'
+    '404':
+      $ref: '../components/responses/Problem.yaml'
+    '409':
+      $ref: '../components/responses/Problem.yaml'
+    '500':
+      $ref: '../components/responses/Problem.yaml'
+
+delete:
+  summary: 删除角色
+  description: 软删除指定角色
+  operationId: deleteRole
+  tags:
+    - 角色管理
+  security:
+    - BearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: 角色ID
+      schema:
+        type: string
+  responses:
+    '200':
+      description: 删除成功
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/SuccessResponse.yaml'
+    '400':
+      $ref: '../components/responses/Problem.yaml'
+    '401':
+      $ref: '../components/responses/Problem.yaml'
+    '404':
+      $ref: '../components/responses/Problem.yaml'
+    '409':
+      $ref: '../components/responses/Problem.yaml'
+    '500':
+      $ref: '../components/responses/Problem.yaml' 
