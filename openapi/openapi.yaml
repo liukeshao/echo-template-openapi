@@ -77,10 +77,6 @@ components:
       $ref: components/schemas/ChangePasswordInput.yaml
     UserResponse:
       $ref: components/schemas/UserResponse.yaml
-    ListUsersInput:
-      $ref: components/schemas/ListUsersInput.yaml
-    ListUsersOutput:
-      $ref: components/schemas/ListUsersOutput.yaml
     # 通用响应
     Response:
       $ref: components/schemas/Response.yaml
