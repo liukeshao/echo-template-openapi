@@ -40,6 +40,7 @@ tags:
   - name: 菜单管理
     description: 菜单树形管理、权限标识、状态管理接口
   - name: 角色管理
+    description: 角色增删改查、权限配置、数据范围管理接口
 x-tagGroups:
   - name: 核心功能
     tags:

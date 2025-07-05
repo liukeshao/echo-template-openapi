@@ -25,14 +25,6 @@ get:
                 properties:
                   data:
                     $ref: '../components/schemas/RoleOutput.yaml'
-    '400':
-      $ref: '../components/responses/Problem.yaml'
-    '401':
-      $ref: '../components/responses/Problem.yaml'
-    '404':
-      $ref: '../components/responses/Problem.yaml'
-    '500':
-      $ref: '../components/responses/Problem.yaml'
 
 put:
   summary: 更新角色
@@ -67,16 +59,6 @@ put:
                 properties:
                   data:
                     $ref: '../components/schemas/RoleOutput.yaml'
-    '400':
-      $ref: '../components/responses/Problem.yaml'
-    '401':
-      $ref: '../components/responses/Problem.yaml'
-    '404':
-      $ref: '../components/responses/Problem.yaml'
-    '409':
-      $ref: '../components/responses/Problem.yaml'
-    '500':
-      $ref: '../components/responses/Problem.yaml'
 
 delete:
   summary: 删除角色
@@ -99,14 +81,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/SuccessResponse.yaml'
-    '400':
-      $ref: '../components/responses/Problem.yaml'
-    '401':
-      $ref: '../components/responses/Problem.yaml'
-    '404':
-      $ref: '../components/responses/Problem.yaml'
-    '409':
-      $ref: '../components/responses/Problem.yaml'
-    '500':
-      $ref: '../components/responses/Problem.yaml' 
+            $ref: '../components/schemas/SuccessResponse.yaml' 

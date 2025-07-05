@@ -56,12 +56,6 @@ get:
                 properties:
                   data:
                     $ref: '../components/schemas/ListRolesOutput.yaml'
-    '400':
-      $ref: '../components/responses/Problem.yaml'
-    '401':
-      $ref: '../components/responses/Problem.yaml'
-    '500':
-      $ref: '../components/responses/Problem.yaml'
 
 post:
   summary: 创建角色
@@ -88,12 +82,4 @@ post:
               - type: object
                 properties:
                   data:
-                    $ref: '../components/schemas/RoleOutput.yaml'
-    '400':
-      $ref: '../components/responses/Problem.yaml'
-    '401':
-      $ref: '../components/responses/Problem.yaml'
-    '409':
-      $ref: '../components/responses/Problem.yaml'
-    '500':
-      $ref: '../components/responses/Problem.yaml' 
+                    $ref: '../components/schemas/RoleOutput.yaml' 
