@@ -7,7 +7,9 @@
   "private": true,
   "scripts": {
     "start": "redocly preview-docs",
-    "build": "redocly bundle echo-template@v1 -o dist/bundle.yaml",
+    "start-admin": "redocly preview-docs echo-template-admin@v1",
+    "build": "redocly bundle echo-template@v1 -o dist/echo-template.yaml",
+    "build-admin": "redocly bundle echo-template-admin@v1 -o dist/echo-template-admin.yaml",
     "test": "redocly lint"
   }
 }

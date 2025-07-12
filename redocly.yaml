@@ -2,6 +2,8 @@
 apis:
   echo-template@v1: 
     root: openapi/openapi.yaml
+  echo-template-admin@v1:
+    root: openapi-admin/openapi.yaml
 extends:
   - recommended
 rules:

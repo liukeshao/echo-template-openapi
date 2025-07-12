@@ -13,36 +13,6 @@ properties:
     format: email
     description: 用户邮箱
     example: john@example.com
-  real_name:
-    type:
-      - string
-      - 'null'
-    description: 真实姓名
-    example: 张三
-  phone:
-    type:
-      - string
-      - 'null'
-    description: 手机号
-    example: 13812345678
-  department:
-    type:
-      - string
-      - 'null'
-    description: 所属部门
-    example: 技术部
-  position:
-    type:
-      - string
-      - 'null'
-    description: 岗位
-    example: 软件工程师
-  roles:
-    type: array
-    items:
-      type: string
-    description: 用户角色列表
-    example: ["user", "admin"]
   status:
     type: string
     enum:
@@ -51,14 +21,6 @@ properties:
       - suspended
     description: 用户状态
     example: active
-  force_change_password:
-    type: boolean
-    description: 是否强制修改密码
-    example: false
-  allow_multi_login:
-    type: boolean
-    description: 是否允许多端登录
-    example: true
   last_login_at:
     type:
       - string
@@ -66,12 +28,6 @@ properties:
     format: date-time
     description: 最后登录时间
     example: '2024-01-01T10:00:00Z'
-  last_login_ip:
-    type:
-      - string
-      - 'null'
-    description: 最后登录IP
-    example: 192.168.1.100
   created_at:
     type: string
     format: date-time

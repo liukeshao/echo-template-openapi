@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: Echo Template API
+  description: |
+    基于 Echo 框架的模板项目 API 文档
+
+    ## 响应格式说明
+    所有API响应都使用统一的格式，HTTP状态码固定为200，通过 `code` 字段区分成功和失败：
+    - `code = 0`: 请求成功
+    - `code != 0`: 请求失败，具体错误码请参考错误码表
+
+    ## 认证说明
+    需要认证的接口使用 Bearer Token 认证，在请求头中添加：
+    ```
+    Authorization: Bearer <access_token>
+    ```
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8000
+    description: 开发环境
+  - url: https://api.example.com
+    description: 生产环境
+tags:
+  - name: 用户管理
+    description: 管理员用户管理接口
+  - name: 部门管理
+    description: 部门增删改查、树形结构管理接口
+  - name: 岗位管理
+    description: 岗位增删改查、排序管理接口
+  - name: 菜单管理
+    description: 菜单树形管理、权限标识、状态管理接口
+  - name: 角色管理
+    description: 角色增删改查、权限配置、数据范围管理接口
+x-tagGroups:
+  - name: 管理功能
+    tags:
+      - 用户管理
+      - 部门管理
+      - 岗位管理
+      - 菜单管理
+      - 角色管理
+paths:
+  /api/v1/admin/users:
+    $ref: paths/api_v1_admin_users.yaml
+  /api/v1/admin/users/{id}:
+    $ref: paths/api_v1_admin_users_id.yaml
+  /api/v1/admin/departments:
+    $ref: paths/api_v1_admin_departments.yaml
+  /api/v1/admin/departments/{id}:
+    $ref: paths/api_v1_admin_departments_id.yaml
+  /api/v1/admin/departments/tree:
+    get:
+      tags:
+        - 部门管理
+      summary: 获取部门树形结构
+      description: 获取完整的部门树形结构，用于展示组织架构
+      operationId: getDepartmentTree
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 获取部门树成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components/schemas/SuccessResponse.yaml
+                  - type: object
+                    properties:
+                      data:
+                        $ref: components/schemas/DepartmentTreeOutput.yaml
+  /api/v1/admin/departments/sort:
+    post:
+      tags:
+        - 部门管理
+      summary: 部门排序
+      description: 批量调整同级部门的排序顺序
+      operationId: sortDepartments
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: components/schemas/SortDepartmentInput.yaml
+      responses:
+        '200':
+          description: 排序成功
+          content:
+            application/json:
+              schema:
+                $ref: components/schemas/SuccessResponse.yaml
+  /api/v1/admin/departments/stats:
+    get:
+      tags:
+        - 部门管理
+      summary: 获取部门统计信息
+      description: 获取部门数量、状态分布、层级统计等信息
+      operationId: getDepartmentStats
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 获取统计信息成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components/schemas/SuccessResponse.yaml
+                  - type: object
+                    properties:
+                      data:
+                        $ref: components/schemas/DepartmentStatsOutput.yaml
+  /api/v1/admin/departments/{id}/move:
+    put:
+      tags:
+        - 部门管理
+      summary: 移动部门
+      description: 调整部门的父级关系，支持拖拽移动
+      operationId: moveDepartment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 部门ID
+          schema:
+            type: string
+            maxLength: 26
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: components/schemas/MoveDepartmentInput.yaml
+      responses:
+        '200':
+          description: 移动成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components/schemas/SuccessResponse.yaml
+                  - type: object
+                    properties:
+                      data:
+                        $ref: components/schemas/DepartmentOutput.yaml
+  /api/v1/admin/departments/{id}/check-deletable:
+    get:
+      tags:
+        - 部门管理
+      summary: 检查部门是否可删除
+      description: 检查部门是否有关联用户或子部门，用于删除前确认
+      operationId: checkDepartmentDeletable
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 部门ID
+          schema:
+            type: string
+            maxLength: 26
+      responses:
+        '200':
+          description: 检查完成
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: components/schemas/SuccessResponse.yaml
+                  - type: object
+                    properties:
+                      data:
+                        $ref: components/schemas/CheckDepartmentDeletableOutput.yaml
+  # 岗位管理
+  /api/v1/admin/positions:
+    $ref: paths/api_v1_admin_positions.yaml
+  /api/v1/admin/positions/{id}:
+    $ref: paths/api_v1_admin_positions_id.yaml
+  /api/v1/admin/positions/sort:
+    $ref: paths/api_v1_admin_positions_sort.yaml
+  /api/v1/admin/positions/stats:
+    $ref: paths/api_v1_admin_positions_stats.yaml
+  /api/v1/admin/positions/{id}/check-deletable:
+    $ref: paths/api_v1_admin_positions_id_check-deletable.yaml
+  # 菜单管理
+  /api/v1/admin/menus:
+    $ref: paths/api_v1_admin_menus.yaml
+  /api/v1/admin/menus/{id}:
+    $ref: paths/api_v1_admin_menus_id.yaml
+  /api/v1/admin/menus/tree:
+    $ref: paths/api_v1_admin_menus_tree.yaml
+  /api/v1/admin/menus/{id}/check-deletable:
+    $ref: paths/api_v1_admin_menus_id_check-deletable.yaml
+  /api/v1/admin/menus/sort:
+    $ref: paths/api_v1_admin_menus_sort.yaml
+  /api/v1/admin/menus/{id}/move:
+    $ref: paths/api_v1_admin_menus_id_move.yaml
+  # 角色管理
+  /api/v1/admin/roles:
+    $ref: paths/api_v1_admin_roles.yaml
+  /api/v1/admin/roles/{id}:
+    $ref: paths/api_v1_admin_roles_id.yaml
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'JWT访问令牌，格式: Bearer <token>'
+  schemas:
+    # 用户相关
+    UserInfo:
+      $ref: components/schemas/UserInfo.yaml
+    # 用户管理相关
+    CreateUserInput:
+      $ref: components/schemas/CreateUserInput.yaml
+    UpdateUserInput:
+      $ref: components/schemas/UpdateUserInput.yaml
+    UserOutput:
+      $ref: components/schemas/UserOutput.yaml
+    ListUsersInput:
+      $ref: components/schemas/ListUsersInput.yaml
+    ListUsersOutput:
+      $ref: components/schemas/ListUsersOutput.yaml
+    # 部门管理相关
+    CreateDepartmentInput:
+      $ref: components/schemas/CreateDepartmentInput.yaml
+    UpdateDepartmentInput:
+      $ref: components/schemas/UpdateDepartmentInput.yaml
+    MoveDepartmentInput:
+      $ref: components/schemas/MoveDepartmentInput.yaml
+    SortDepartmentInput:
+      $ref: components/schemas/SortDepartmentInput.yaml
+    ListDepartmentsInput:
+      $ref: components/schemas/ListDepartmentsInput.yaml
+    DepartmentInfo:
+      $ref: components/schemas/DepartmentInfo.yaml
+    DepartmentOutput:
+      $ref: components/schemas/DepartmentOutput.yaml
+    ListDepartmentsOutput:
+      $ref: components/schemas/ListDepartmentsOutput.yaml
+    DepartmentTreeOutput:
+      $ref: components/schemas/DepartmentTreeOutput.yaml
+    CheckDepartmentDeletableOutput:
+      $ref: components/schemas/CheckDepartmentDeletableOutput.yaml
+    DepartmentStatsOutput:
+      $ref: components/schemas/DepartmentStatsOutput.yaml
+    # 岗位管理相关
+    CreatePositionInput:
+      $ref: components/schemas/PositionInput.yaml#/CreatePositionInput
+    UpdatePositionInput:
+      $ref: components/schemas/PositionInput.yaml#/UpdatePositionInput
+    ListPositionsInput:
+      $ref: components/schemas/PositionInput.yaml#/ListPositionsInput
+    SortPositionInput:
+      $ref: components/schemas/PositionInput.yaml#/SortPositionInput
+    PositionInfo:
+      $ref: components/schemas/PositionOutput.yaml#/PositionInfo
+    PositionOutput:
+      $ref: components/schemas/PositionOutput.yaml#/PositionOutput
+    ListPositionsOutput:
+      $ref: components/schemas/PositionOutput.yaml#/ListPositionsOutput
+    CheckPositionDeletableOutput:
+      $ref: components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput
+    PositionStatsOutput:
+      $ref: components/schemas/PositionOutput.yaml#/PositionStatsOutput
+    # 菜单管理相关
+    MenuInfo:
+      $ref: components/schemas/MenuInfo.yaml
+    CreateMenuInput:
+      $ref: components/schemas/CreateMenuInput.yaml
+    UpdateMenuInput:
+      $ref: components/schemas/UpdateMenuInput.yaml
+    MenuOutput:
+      $ref: components/schemas/MenuOutput.yaml
+    ListMenusOutput:
+      $ref: components/schemas/ListMenusOutput.yaml
+    MenuTreeOutput:
+      $ref: components/schemas/MenuTreeOutput.yaml
+    SortMenuInput:
+      $ref: components/schemas/SortMenuInput.yaml
+    MoveMenuInput:
+      $ref: components/schemas/MoveMenuInput.yaml
+    CheckMenuDeletableOutput:
+      $ref: components/schemas/CheckMenuDeletableOutput.yaml
+    # 角色管理相关
+    CreateRoleInput:
+      $ref: components/schemas/CreateRoleInput.yaml
+    UpdateRoleInput:
+      $ref: components/schemas/UpdateRoleInput.yaml
+    RoleOutput:
+      $ref: components/schemas/RoleOutput.yaml
+    ListRolesOutput:
+      $ref: components/schemas/ListRolesOutput.yaml
+    # 通用响应
+    Response:
+      $ref: components/schemas/Response.yaml
+    SuccessResponse:
+      $ref: components/schemas/SuccessResponse.yaml
+    # 分页相关
+    PageInput:
+      $ref: components/schemas/PageInput.yaml
+    PageOutput:
+      $ref: components/schemas/PageOutput.yaml

@@ -7,24 +7,28 @@ required:
 properties:
   code:
     type: integer
-    description: 错误状态码，非0表示失败
-    example: 1001
+    description: 业务状态码，0表示成功，非0表示失败
+    example: 0
   message:
     type: string
-    description: 错误消息
-    example: "请求参数格式错误"
+    description: 响应消息
+    example: Success
   data:
     type:
       - object
+      - array
+      - string
+      - number
+      - boolean
       - 'null'
-    description: 错误详情数据
+    description: 响应数据，可以为任意类型或null
     example: null
   errors:
     type: array
     items:
       type: string
     description: 错误详情列表
-    example: ["用户名不能为空", "密码长度不能少于8位"]
+    example: []
   timestamp:
     type: integer
     format: int64
@@ -33,4 +37,4 @@ properties:
   request_id:
     type: string
     description: 请求ID
-    example: req_123 
+    example: req_123
