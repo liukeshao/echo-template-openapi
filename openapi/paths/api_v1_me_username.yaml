@@ -1,0 +1,41 @@
+put:
+  tags:
+    - 当前用户
+  summary: 更新当前用户用户名
+  description: 更新当前登录用户的用户名
+  operationId: updateCurrentUserUsername
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/UpdateUsernameInput.yaml
+        examples:
+          default:
+            summary: 更新用户名示例
+            value:
+              username: "newusername"
+  responses:
+    '200':
+      description: 更新结果
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserResponse.yaml
+          examples:
+            success:
+              summary: 更新成功
+              value:
+                code: 0
+                message: 用户名更新成功
+                data:
+                  id: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+                  username: newusername
+                  email: john@example.com
+                  status: active
+                  last_login_at: '2024-01-01T10:00:00Z'
+                  created_at: '2024-01-01T10:00:00Z'
+                timestamp: 1641024000
+                request_id: req_123

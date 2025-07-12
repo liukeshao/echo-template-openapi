@@ -1,0 +1,41 @@
+put:
+  tags:
+    - 当前用户
+  summary: 更新当前用户邮箱
+  description: 更新当前登录用户的邮箱地址
+  operationId: updateCurrentUserEmail
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/UpdateEmailInput.yaml
+        examples:
+          default:
+            summary: 更新邮箱示例
+            value:
+              email: "newemail@example.com"
+  responses:
+    '200':
+      description: 更新结果
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserResponse.yaml
+          examples:
+            success:
+              summary: 更新成功
+              value:
+                code: 0
+                message: 邮箱更新成功
+                data:
+                  id: 01ARZ3NDEKTSV4RRFFQ69G5FAV
+                  username: john_doe
+                  email: newemail@example.com
+                  status: active
+                  last_login_at: '2024-01-01T10:00:00Z'
+                  created_at: '2024-01-01T10:00:00Z'
+                timestamp: 1641024000
+                request_id: req_123

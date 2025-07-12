@@ -47,6 +47,10 @@ paths:
     $ref: paths/api_v1_auth_logout.yaml
   /api/v1/me:
     $ref: paths/api_v1_me.yaml
+  /api/v1/me/username:
+    $ref: paths/api_v1_me_username.yaml
+  /api/v1/me/email:
+    $ref: paths/api_v1_me_email.yaml
   /api/v1/me/change-password:
     $ref: paths/api_v1_me_change-password.yaml
 components:
@@ -71,8 +75,10 @@ components:
     # 用户相关
     UserInfo:
       $ref: components/schemas/UserInfo.yaml
-    UpdateMeInput:
-      $ref: components/schemas/UpdateMeInput.yaml
+    UpdateUsernameInput:
+      $ref: components/schemas/UpdateUsernameInput.yaml
+    UpdateEmailInput:
+      $ref: components/schemas/UpdateEmailInput.yaml
     ChangePasswordInput:
       $ref: components/schemas/ChangePasswordInput.yaml
     UserResponse:
