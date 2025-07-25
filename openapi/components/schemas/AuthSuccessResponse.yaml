@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        $ref: ./AuthOutput.yaml
+        description: 认证成功时返回的用户信息和令牌数据 
