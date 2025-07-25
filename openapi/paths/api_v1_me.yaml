@@ -12,7 +12,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/UserResponse.yaml
+            $ref: ../components/schemas/UserApiResponse.yaml
           examples:
             success:
               summary: 获取成功
