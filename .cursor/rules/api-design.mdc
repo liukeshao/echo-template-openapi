@@ -63,14 +63,11 @@ responses:
       application/json:
         schema:
           # 使用预定义的响应模型
-          $ref: '../components/schemas/SuccessResponse.yaml'
-          # 或使用 allOf 扩展
-          allOf:
-            - $ref: '../components/schemas/Response.yaml'
-            - type: object
-              properties:
-                data:
-                  $ref: '../components/schemas/XxxOutput.yaml'
+          $ref: '../components/schemas/SimpleApiResponse.yaml'
+          # 认证API使用
+          $ref: '../components/schemas/AuthApiResponse.yaml'
+          # 用户信息API使用
+          $ref: '../components/schemas/UserApiResponse.yaml'
 ```
 
 ### 参数定义规范

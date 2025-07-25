@@ -271,7 +271,7 @@ post:
     $ref: ../components/requestBodies/LoginInput.yaml
   responses:
     '200':
-      $ref: ../components/responses/AuthResponse.yaml
+      $ref: ../components/schemas/AuthApiResponse.yaml
   x-codeSamples:
     - lang: curl
       label: cURL
