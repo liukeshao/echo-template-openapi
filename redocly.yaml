@@ -14,7 +14,20 @@ apis:
         generateCodeSamples:
           languages:  # Array of language config objects; indicates in which languages to generate code samples.
             - lang: curl
-
+  admin@v1:
+    root: openapi-admin/openapi.yaml
+    theme:
+      openapi:
+        htmlTemplate: ./docs/index.html
+        expandResponses: "all"
+        sortPropsAlphabetically: true
+        theme:
+          colors:
+            primary:
+              main: "#32329f"
+        generateCodeSamples:
+          languages: # Array of language config objects; indicates in which languages to generate code samples.
+            - lang: curl
 extends:
   - recommended
 

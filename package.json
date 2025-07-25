@@ -8,6 +8,7 @@
   "scripts": {
     "start": "redocly preview",
     "build:core": "redocly bundle core@v1 -o dist/core@v1.yaml",
+    "build:admin": "redocly bundle admin@v1 -o dist/admin@v1.yaml",
     "test": "redocly lint"
   }
 }
