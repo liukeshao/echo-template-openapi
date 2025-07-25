@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        $ref: ./MenuOutput.yaml
+        description: 菜单信息数据

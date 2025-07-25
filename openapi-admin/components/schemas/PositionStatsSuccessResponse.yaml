@@ -1,0 +1,6 @@
+allOf:
+  - $ref: './SuccessResponse.yaml'
+  - type: object
+    properties:
+      data:
+        $ref: './PositionOutput.yaml#/PositionStatsOutput'

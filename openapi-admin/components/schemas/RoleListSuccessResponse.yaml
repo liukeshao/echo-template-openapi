@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        $ref: ./ListRolesOutput.yaml
+        description: 角色列表数据

@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        $ref: ./ListUsersOutput.yaml
+        description: 用户列表数据

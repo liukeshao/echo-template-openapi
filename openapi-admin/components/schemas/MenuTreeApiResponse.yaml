@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./MenuTreeSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  菜单树形结构API的统一响应格式
+  - 成功时(code=0)：data包含菜单树形结构
+  - 失败时(code!=0)：data为null，errors包含错误详情

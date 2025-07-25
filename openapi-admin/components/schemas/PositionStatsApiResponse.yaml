@@ -1,0 +1,13 @@
+oneOf:
+  - $ref: './PositionStatsSuccessResponse.yaml'
+  - $ref: './ErrorResponse.yaml'
+discriminator:
+  propertyName: code
+  mapping:
+    '0': './PositionStatsSuccessResponse.yaml'
+    '400': './ErrorResponse.yaml'
+    '401': './ErrorResponse.yaml'
+    '403': './ErrorResponse.yaml'
+    '404': './ErrorResponse.yaml'
+    '422': './ErrorResponse.yaml'
+    '500': './ErrorResponse.yaml'

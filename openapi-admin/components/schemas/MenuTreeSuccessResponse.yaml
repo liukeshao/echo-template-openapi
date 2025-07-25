@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        $ref: ./MenuTreeOutput.yaml
+        description: 菜单树形结构数据

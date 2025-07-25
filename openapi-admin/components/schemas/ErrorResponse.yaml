@@ -1,0 +1,21 @@
+allOf:
+  - $ref: ./BaseResponse.yaml
+  - type: object
+    required:
+      - data
+      - errors
+    properties:
+      code:
+        type: integer
+        minimum: 1
+        description: 错误状态码，大于0的整数
+        example: 40101
+      data:
+        type: 'null'
+        description: 错误时数据字段固定为null
+      errors:
+        type: array
+        items:
+          type: string
+        description: 错误详情列表
+        example: []

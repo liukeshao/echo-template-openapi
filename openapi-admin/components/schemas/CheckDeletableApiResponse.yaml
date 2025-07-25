@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./CheckDeletableSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  检查删除权限API的统一响应格式
+  - 成功时(code=0)：data包含删除权限检查结果
+  - 失败时(code!=0)：data为null，errors包含错误详情

@@ -1,0 +1,16 @@
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    properties:
+      data:
+        type: object
+        properties:
+          deletable:
+            type: boolean
+            description: 是否可删除
+          reason:
+            type: string
+            description: 不可删除的原因（当deletable为false时）
+        required:
+          - deletable
+        description: 删除权限检查结果

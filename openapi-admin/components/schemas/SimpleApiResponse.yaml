@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./SimpleSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  简单操作的统一响应格式（如删除、更新等）
+  - 成功时(code=0)：data为null
+  - 失败时(code!=0)：data为null，errors包含错误详情

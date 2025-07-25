@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./RoleSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  角色相关API的统一响应格式
+  - 成功时(code=0)：data包含角色信息
+  - 失败时(code!=0)：data为null，errors包含错误详情

@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./PositionSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  职位相关API的统一响应格式
+  - 成功时(code=0)：data包含职位信息
+  - 失败时(code!=0)：data为null，errors包含错误详情
