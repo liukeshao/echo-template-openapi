@@ -2,14 +2,12 @@
   "name": "echo-template-api",
   "version": "1.0.0",
   "dependencies": {
-    "@redocly/cli": "^1.34.4"
+    "@redocly/cli": "^2.0.0"
   },
   "private": true,
   "scripts": {
-    "start": "redocly preview-docs",
-    "start-admin": "redocly preview-docs echo-template-admin@v1",
-    "build": "redocly bundle echo-template@v1 -o dist/echo-template.yaml",
-    "build-admin": "redocly bundle echo-template-admin@v1 -o dist/echo-template-admin.yaml",
+    "start": "redocly preview",
+    "build": "redocly bundle echo-template@v1 -o dist/echo-template@v1.yaml",
     "test": "redocly lint"
   }
 }

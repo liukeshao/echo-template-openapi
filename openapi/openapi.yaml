@@ -59,7 +59,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: 'JWT访问令牌，格式: Bearer <token>'
+      description: 'JWT访问令牌，格式: Bearer `<token>`'
   schemas:
     # 认证相关
     RegisterInput:

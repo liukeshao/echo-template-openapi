@@ -1,6 +1,16 @@
-# OpenAPI Definition Starter
+# Echo Template OpenAPI
 
-## Working on your OpenAPI Definition
+> **🎉 已升级到 Redocly CLI 2.0.0**  
+> 项目已成功升级到最新的 Redocly CLI 2.0.0 版本，享受更好的性能和稳定性！
+
+## 升级亮点
+
+- ✅ **Redocly CLI 2.0.0**: 采用最新版本，性能和稳定性显著提升
+- ✅ **配置兼容性**: 配置文件已调整为符合2.0版本规范
+- ✅ **所有功能正常**: lint、preview-docs、build-docs、bundle 等命令都已验证可用
+- ✅ **使用 Context7**: 利用最新的文档和最佳实践指导升级
+
+## 快速开始
 
 ### Install
 
