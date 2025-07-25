@@ -39,12 +39,7 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/DepartmentOutput.yaml'
+            $ref: '../components/schemas/DepartmentApiResponse.yaml'
           examples:
             success:
               summary: 创建成功
@@ -134,12 +129,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/ListDepartmentsOutput.yaml'
+            $ref: '../components/schemas/DepartmentListApiResponse.yaml'
           examples:
             success:
               summary: 获取成功
@@ -167,4 +157,4 @@ get:
                   page: 1
                   page_size: 20
                 timestamp: 1704067200000
-                request_id: "req_12345" 
+                request_id: "req_12345"

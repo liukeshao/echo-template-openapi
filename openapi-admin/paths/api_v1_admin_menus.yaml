@@ -17,12 +17,7 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/MenuOutput.yaml'
+            $ref: '../components/schemas/MenuApiResponse.yaml'
 
 get:
   summary: 获取菜单列表
@@ -64,9 +59,4 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/ListMenusOutput.yaml' 
+            $ref: '../components/schemas/MenuListApiResponse.yaml'

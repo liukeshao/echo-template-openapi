@@ -18,12 +18,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/MenuOutput.yaml
+            $ref: ../components/schemas/MenuApiResponse.yaml
 
 put:
   summary: 更新菜单
@@ -51,12 +46,7 @@ put:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/MenuOutput.yaml
+            $ref: ../components/schemas/MenuApiResponse.yaml
 
 delete:
   summary: 删除菜单
@@ -78,4 +68,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/SuccessResponse.yaml 
+            $ref: ../components/schemas/SimpleApiResponse.yaml

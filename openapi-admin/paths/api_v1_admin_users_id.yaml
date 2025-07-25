@@ -99,4 +99,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/SuccessResponse.yaml' 
+            $ref: '../components/schemas/SimpleApiResponse.yaml'

@@ -32,9 +32,4 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/MenuTreeOutput.yaml 
+            $ref: ../components/schemas/MenuTreeApiResponse.yaml

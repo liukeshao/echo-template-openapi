@@ -217,7 +217,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: 'JWT访问令牌，格式: Bearer <token>'
+      description: 'JWT访问令牌，格式: Bearer `<token>`'
   schemas:
     # 用户相关
     UserInfo:
@@ -261,18 +261,14 @@ components:
       $ref: components/schemas/PositionInput.yaml#/CreatePositionInput
     UpdatePositionInput:
       $ref: components/schemas/PositionInput.yaml#/UpdatePositionInput
-    ListPositionsInput:
-      $ref: components/schemas/PositionInput.yaml#/ListPositionsInput
+
     SortPositionInput:
       $ref: components/schemas/PositionInput.yaml#/SortPositionInput
     PositionInfo:
       $ref: components/schemas/PositionOutput.yaml#/PositionInfo
-    PositionOutput:
-      $ref: components/schemas/PositionOutput.yaml#/PositionOutput
     ListPositionsOutput:
       $ref: components/schemas/PositionOutput.yaml#/ListPositionsOutput
-    CheckPositionDeletableOutput:
-      $ref: components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput
+
     PositionStatsOutput:
       $ref: components/schemas/PositionOutput.yaml#/PositionStatsOutput
     # 菜单管理相关
@@ -292,8 +288,7 @@ components:
       $ref: components/schemas/SortMenuInput.yaml
     MoveMenuInput:
       $ref: components/schemas/MoveMenuInput.yaml
-    CheckMenuDeletableOutput:
-      $ref: components/schemas/CheckMenuDeletableOutput.yaml
+
     # 角色管理相关
     CreateRoleInput:
       $ref: components/schemas/CreateRoleInput.yaml
@@ -304,8 +299,6 @@ components:
     ListRolesOutput:
       $ref: components/schemas/ListRolesOutput.yaml
     # 通用响应
-    Response:
-      $ref: components/schemas/Response.yaml
     SuccessResponse:
       $ref: components/schemas/SuccessResponse.yaml
     # 分页相关

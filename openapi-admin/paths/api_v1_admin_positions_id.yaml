@@ -19,12 +19,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+            $ref: ../components/schemas/PositionApiResponse.yaml
 
 put:
   tags:
@@ -53,12 +48,7 @@ put:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+            $ref: ../components/schemas/PositionApiResponse.yaml
 
 delete:
   tags:
@@ -81,9 +71,4 @@ delete:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    type: 'null' 
+            $ref: ../components/schemas/SimpleApiResponse.yaml

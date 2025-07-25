@@ -50,12 +50,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/SuccessResponse.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/ListRolesOutput.yaml'
+            $ref: '../components/schemas/RoleListApiResponse.yaml'
 
 post:
   summary: 创建角色
@@ -77,9 +72,4 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/SuccessResponse.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/RoleOutput.yaml' 
+            $ref: '../components/schemas/RoleApiResponse.yaml'

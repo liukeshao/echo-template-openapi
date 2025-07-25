@@ -12,9 +12,4 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/PositionStatsOutput 
+            $ref: ../components/schemas/PositionStatsApiResponse.yaml

@@ -19,12 +19,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/SuccessResponse.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/RoleOutput.yaml'
+            $ref: '../components/schemas/RoleApiResponse.yaml'
 
 put:
   summary: 更新角色
@@ -53,12 +48,7 @@ put:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/SuccessResponse.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/RoleOutput.yaml'
+            $ref: '../components/schemas/RoleApiResponse.yaml'
 
 delete:
   summary: 删除角色
@@ -81,4 +71,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/SuccessResponse.yaml' 
+            $ref: '../components/schemas/SimpleApiResponse.yaml'

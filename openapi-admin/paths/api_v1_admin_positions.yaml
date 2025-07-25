@@ -18,12 +18,7 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/PositionOutput
+            $ref: ../components/schemas/PositionApiResponse.yaml
 
 get:
   tags:
@@ -66,9 +61,4 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/ListPositionsOutput 
+            $ref: ../components/schemas/PositionListApiResponse.yaml

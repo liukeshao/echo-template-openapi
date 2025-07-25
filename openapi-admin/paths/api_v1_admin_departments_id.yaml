@@ -22,12 +22,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/DepartmentOutput.yaml'
+            $ref: '../components/schemas/DepartmentApiResponse.yaml'
           examples:
             success:
               summary: 获取成功
@@ -102,12 +97,7 @@ put:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '../components/schemas/Response.yaml'
-              - type: object
-                properties:
-                  data:
-                    $ref: '../components/schemas/DepartmentOutput.yaml'
+            $ref: '../components/schemas/DepartmentApiResponse.yaml'
           examples:
             success:
               summary: 更新成功
@@ -147,7 +137,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../components/schemas/SuccessResponse.yaml'
+            $ref: '../components/schemas/SimpleApiResponse.yaml'
           examples:
             success:
               summary: 删除成功
@@ -174,4 +164,4 @@ delete:
                 data: null
                 errors: ["部门下还有子部门，请先删除子部门"]
                 timestamp: 1704067200000
-                request_id: "req_12349" 
+                request_id: "req_12349"

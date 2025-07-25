@@ -19,9 +19,4 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/PositionOutput.yaml#/CheckPositionDeletableOutput 
+            $ref: ../components/schemas/CheckDeletableApiResponse.yaml

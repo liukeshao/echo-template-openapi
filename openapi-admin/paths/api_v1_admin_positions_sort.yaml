@@ -18,9 +18,4 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    type: 'null' 
+            $ref: ../components/schemas/SimpleApiResponse.yaml
