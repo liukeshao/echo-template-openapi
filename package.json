@@ -1,5 +1,5 @@
 {
-  "name": "echo-template-api",
+  "name": "openapi-template",
   "version": "1.0.0",
   "dependencies": {
     "@redocly/cli": "^2.0.0"
@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "redocly preview",
-    "build": "redocly bundle echo-template@v1 -o dist/echo-template@v1.yaml",
+    "build:core": "redocly bundle core@v1 -o dist/core@v1.yaml",
     "test": "redocly lint"
   }
 }
