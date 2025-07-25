@@ -1,252 +1,145 @@
-# 数据模型 (Schemas)
+# API响应模式使用指南
 
-本目录包含所有 API 数据模型的定义，这些模型用于描述请求体、响应体和数据传输对象的结构。
+本项目实现了基于 OpenAPI 3.1 的统一响应格式，HTTP 状态码始终为 200，通过响应体中的 `code` 字段判断业务状态。
 
-## 目录结构
+## 核心概念
+
+### 响应格式设计原则
+
+1. **HTTP 状态码固定为 200**：所有 API 响应的 HTTP 状态码都是 200
+2. **通过 code 字段区分状态**：
+   - `code = 0`：请求成功
+   - `code != 0`：请求失败，具体错误码表示不同的错误类型
+3. **data 字段结构根据成功/失败而不同**：
+   - 成功时：`data` 包含实际的业务数据
+   - 失败时：`data` 固定为 `null`
+
+## Schema 结构层次
+
+### 基础组件
 
 ```
-schemas/
-├── AuthOutput.yaml           # 认证输出模型
-├── AuthResponse.yaml         # 认证响应模型  
-├── ChangePasswordInput.yaml  # 修改密码输入模型
-├── LoginInput.yaml           # 登录输入模型
-├── PageInput.yaml            # 分页输入模型
-├── PageOutput.yaml           # 分页输出模型
-├── RefreshTokenInput.yaml    # 刷新令牌输入模型
-├── RegisterInput.yaml        # 注册输入模型
-├── Response.yaml             # 通用响应模型
-├── SuccessResponse.yaml      # 成功响应模型
-├── UpdateEmailInput.yaml     # 更新邮箱输入模型
-├── UpdateUsernameInput.yaml  # 更新用户名输入模型
-├── UserInfo.yaml             # 用户信息模型
-├── UserResponse.yaml         # 用户响应模型
-└── README.md                 # 本文件
+BaseResponse.yaml              # 所有响应的公共字段
+├── SuccessResponse.yaml       # 成功响应基础 (code=0)
+└── ErrorResponse.yaml         # 错误响应 (code!=0)
 ```
 
-## 模型分类
+### 具体业务场景
 
-### 输入模型 (Input)
-用于定义 API 请求体的数据结构：
-- `LoginInput.yaml` - 用户登录数据
-- `RegisterInput.yaml` - 用户注册数据
-- `ChangePasswordInput.yaml` - 修改密码数据
-- `UpdateEmailInput.yaml` - 更新邮箱数据
-- `UpdateUsernameInput.yaml` - 更新用户名数据
-- `RefreshTokenInput.yaml` - 刷新令牌数据
-- `PageInput.yaml` - 分页查询参数
+```
+AuthApiResponse.yaml           # 认证相关API的统一响应
+├── AuthSuccessResponse.yaml   # 认证成功响应 (包含用户信息+令牌)
+└── ErrorResponse.yaml         # 认证失败响应
 
-### 输出模型 (Output/Response)
-用于定义 API 响应体的数据结构：
-- `AuthOutput.yaml` - 认证成功返回数据
-- `AuthResponse.yaml` - 认证响应包装
-- `UserInfo.yaml` - 用户基本信息
-- `UserResponse.yaml` - 用户响应包装
-- `PageOutput.yaml` - 分页响应数据
+UserApiResponse.yaml           # 用户信息相关API的统一响应
+├── UserSuccessResponse.yaml   # 用户信息成功响应 (包含用户详情)
+└── ErrorResponse.yaml         # 用户信息获取失败响应
 
-### 通用模型
-可在多个场景中复用的基础模型：
-- `Response.yaml` - 统一响应格式
-- `SuccessResponse.yaml` - 成功响应模板
+SimpleApiResponse.yaml         # 简单操作的统一响应
+├── SimpleSuccessResponse.yaml # 简单操作成功响应 (data为null)
+└── ErrorResponse.yaml         # 简单操作失败响应
+```
 
-## 设计原则
+## 使用示例
 
-### 1. 命名规范
-- **PascalCase**: 所有文件名使用大写开头的驼峰命名
-- **语义明确**: 名称能清晰表达模型的用途
-- **后缀约定**: 
-  - 输入模型使用 `Input` 后缀
-  - 输出模型使用 `Output` 或 `Response` 后缀
+### 1. 认证相关API（如登录、注册）
 
-### 2. 结构设计
-- **单一职责**: 每个模型只定义一个明确的数据结构
-- **组合优先**: 使用 `allOf`、`oneOf` 等组合现有模型
-- **扩展性**: 为未来扩展预留空间
+使用 `AuthApiResponse.yaml`：
 
-### 3. 验证规则
-- **类型明确**: 为所有字段指定明确的数据类型
-- **约束完整**: 添加长度、格式、枚举等约束
-- **示例丰富**: 提供真实有效的示例数据
-
-## 模型示例
-
-### 基础响应模型
 ```yaml
-# Response.yaml
-type: object
-description: 统一响应格式
-required:
-  - code
-  - message
-  - timestamp
-properties:
-  code:
-    type: integer
-    description: 响应码，0表示成功，非0表示错误
-    example: 0
-  message:
-    type: string
-    description: 响应消息
-    example: "操作成功"
-  data:
-    description: 响应数据，根据具体接口而定
-  timestamp:
-    type: integer
-    format: int64
-    description: 响应时间戳
-    example: 1640995200000
+responses:
+  '200':
+    description: 登录结果
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AuthApiResponse.yaml
 ```
 
-### 用户信息模型
-```yaml
-# UserInfo.yaml
-type: object
-description: 用户基本信息
-required:
-  - id
-  - username
-  - email
-properties:
-  id:
-    type: string
-    description: 用户唯一标识符
-    example: "user_123456"
-  username:
-    type: string
-    description: 用户名
-    minLength: 3
-    maxLength: 20
-    pattern: '^[a-zA-Z0-9_]+$'
-    example: "john_doe"
-  email:
-    type: string
-    format: email
-    description: 用户邮箱地址
-    example: "john@example.com"
-  createdAt:
-    type: string
-    format: date-time
-    description: 创建时间
-    readOnly: true
-    example: "2023-01-01T00:00:00Z"
+**成功响应示例**：
+```json
+{
+  "code": 0,
+  "message": "登录成功",
+  "data": {
+    "user": {
+      "id": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "username": "john_doe",
+      "email": "john@example.com"
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIs...",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIs...",
+    "expires_at": 1641024000
+  },
+  "timestamp": 1641024000,
+  "request_id": "req_123456789"
+}
 ```
 
-## 使用方式
+**失败响应示例**：
+```json
+{
+  "code": 40101,
+  "message": "邮箱或密码错误",
+  "data": null,
+  "errors": ["邮箱或密码不正确"],
+  "timestamp": 1641024000,
+  "request_id": "req_123456789"
+}
+```
 
-### 在路径中引用
+### 2. 用户信息相关API
+
+使用 `UserApiResponse.yaml`：
+
 ```yaml
-# 在 paths 文件中使用
-requestBody:
-  content:
-    application/json:
-      schema:
-        $ref: ../components/schemas/LoginInput.yaml
-
 responses:
   '200':
     content:
       application/json:
         schema:
-          allOf:
-            - $ref: ../components/schemas/Response.yaml
-            - type: object
-              properties:
-                data:
-                  $ref: ../components/schemas/UserInfo.yaml
+          $ref: ../components/schemas/UserApiResponse.yaml
 ```
 
-### 模型组合
+### 3. 简单操作API（如登出、修改密码）
+
+使用 `SimpleApiResponse.yaml`：
+
 ```yaml
-# 组合现有模型创建新的响应
-allOf:
-  - $ref: ./Response.yaml
-  - type: object
-    properties:
-      data:
-        type: array
-        items:
-          $ref: ./UserInfo.yaml
+responses:
+  '200':
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/SimpleApiResponse.yaml
 ```
+
+## discriminator 工作原理
+
+OpenAPI 3.1 使用 `discriminator` 基于 `code` 字段的值来确定具体的响应schema：
+
+```yaml
+oneOf:
+  - $ref: ./AuthSuccessResponse.yaml    # 当 code = 0 时
+  - $ref: ./ErrorResponse.yaml          # 当 code != 0 时
+discriminator:
+  propertyName: code
+  mapping:
+    0: '#/components/schemas/AuthSuccessResponse'
+```
+
+## 错误码约定
+
+- `0`：成功
+- `40001-49999`：客户端错误（4xxxx）
+- `50001-59999`：服务端错误（5xxxx）
+- `40101`：认证失败
+- `40001`：参数验证失败
+- `40301`：权限不足
 
 ## 最佳实践
 
-### 1. 字段定义
-```yaml
-properties:
-  email:
-    type: string
-    format: email          # 使用标准格式
-    description: 用户邮箱   # 提供清晰描述
-    example: "user@example.com"  # 提供示例
-  
-  password:
-    type: string
-    minLength: 8           # 最小长度限制
-    maxLength: 128         # 最大长度限制
-    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$'  # 正则验证
-    description: 密码，至少8位，包含大小写字母和数字
-    writeOnly: true        # 只写字段，不在响应中返回
-```
-
-### 2. 枚举值定义
-```yaml
-status:
-  type: string
-  enum: ["active", "inactive", "pending"]
-  description: 用户状态
-  example: "active"
-```
-
-### 3. 数组和对象
-```yaml
-tags:
-  type: array
-  description: 用户标签列表
-  items:
-    type: string
-    example: "developer"
-  example: ["developer", "backend"]
-
-address:
-  type: object
-  properties:
-    street:
-      type: string
-      example: "123 Main St"
-    city:
-      type: string
-      example: "New York"
-```
-
-## 维护指南
-
-### 添加新模型
-1. 创建新的 YAML 文件
-2. 遵循命名规范
-3. 添加完整的类型定义和验证规则
-4. 提供示例数据
-5. 更新相关文档
-
-### 修改现有模型
-1. 优先考虑向后兼容
-2. 新增字段设为可选
-3. 废弃字段标记 `deprecated: true`
-4. 更新相关的路径定义
-
-### 验证检查
-```bash
-# 验证特定模型
-npx redocly lint openapi/components/schemas/UserInfo.yaml
-
-# 验证所有模型
-npx redocly lint openapi/openapi.yaml
-```
-
-## 相关文档
-
-- **[组件管理指南](../README.md)**: 完整的组件管理说明
-- **[路径定义指南](../../paths/README.md)**: 如何在路径中使用模型
-- **[OpenAPI 规范指南](../../README.md)**: 项目整体架构
-
----
-
-> 💡 **提示**: 良好的数据模型设计是 API 文档质量的基础。投入时间设计清晰、一致的数据结构将极大提升 API 的可用性。 
+1. **新API开发**：始终使用ApiResponse模式的schema
+2. **错误处理**：在 `errors` 数组中提供详细的错误信息
+3. **请求追踪**：确保每个响应都包含 `request_id` 用于问题追踪
+4. **文档示例**：为每个API提供成功和失败的响应示例 

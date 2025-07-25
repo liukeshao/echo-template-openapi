@@ -1,9 +1,12 @@
 allOf:
-  - $ref: ./Response.yaml
+  - $ref: ./BaseResponse.yaml
   - type: object
     required:
       - data
     properties:
+      code:
+        type: integer
+        enum: [0]
+        description: 成功状态码，固定为0
       data:
-        type: 'null'
-        description: 此类操作成功或失败时data都为null
+        description: 成功时的业务数据 
