@@ -2,7 +2,6 @@ type: object
 required:
   - code
   - message
-  - data
   - timestamp
 properties:
   code:
@@ -13,16 +12,6 @@ properties:
     type: string
     description: 响应消息
     example: Success
-  data:
-    type:
-      - object
-      - array
-      - string
-      - number
-      - boolean
-      - 'null'
-    description: 响应数据，可以为任意类型或null
-    example: null
   errors:
     type: array
     items:
