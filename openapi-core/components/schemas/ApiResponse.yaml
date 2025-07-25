@@ -1,9 +1,0 @@
-oneOf:
-  - $ref: ./SuccessResponse.yaml
-  - $ref: ./ErrorResponse.yaml
-discriminator:
-  propertyName: code
-description: |
-  统一响应格式，HTTP状态码始终为200
-  - 当 code = 0 时，表示请求成功，data字段包含业务数据
-  - 当 code != 0 时，表示请求失败，data字段为null，errors字段包含错误详情 

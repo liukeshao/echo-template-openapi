@@ -86,8 +86,6 @@ components:
       $ref: components/schemas/SuccessResponse.yaml
     ErrorResponse:
       $ref: components/schemas/ErrorResponse.yaml
-    ApiResponse:
-      $ref: components/schemas/ApiResponse.yaml
     # 统一响应模式 - 具体业务场景
     AuthSuccessResponse:
       $ref: components/schemas/AuthSuccessResponse.yaml

@@ -5,14 +5,15 @@
 ## 目录结构
 
 ```
-openapi/
+openapi-core/
 ├── openapi.yaml            # 主规范文件（入口点）
 ├── components/             # 可复用组件
 │   ├── schemas/           # 数据模型定义
 │   ├── responses/         # 响应定义
 │   └── headers/           # 请求头定义
 ├── paths/                 # API 路径定义
-└── code_samples/          # 多语言代码示例
+├── code_samples/          # 多语言代码示例
+└── examples/              # 示例文件（如有需要）
 ```
 
 ## 主规范文件 (openapi.yaml)
@@ -60,10 +61,25 @@ paths:
 }
 ```
 
-**优势**:
+**响应类型架构**:
+
+本项目采用分层响应类型设计：
+
+1. **基础响应组件**:
+   - `BaseResponse`: 响应基础结构
+   - `SuccessResponse`: 成功响应基类
+   - `ErrorResponse`: 错误响应基类
+
+2. **具体业务响应**:
+   - `AuthApiResponse`: 认证相关API响应（登录、注册、刷新令牌）
+   - `UserApiResponse`: 用户信息相关API响应（获取、更新用户信息）
+   - `SimpleApiResponse`: 简单操作API响应（登出、修改密码）
+
+**设计优势**:
 - HTTP 状态码固定为 200，简化客户端处理
 - 通过 `code` 字段进行业务逻辑判断
 - 统一的错误处理机制
+- 具体响应类型提供类型安全和更好的文档体验
 
 ### 2. Bearer Token 认证
 
@@ -72,10 +88,11 @@ paths:
 ```yaml
 components:
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: 'JWT访问令牌，格式: Bearer `<token>`'
 ```
 
 ### 3. Redocly 扩展支持
@@ -105,13 +122,26 @@ components:
 - **引用复用**: 大量使用 `$ref` 避免重复
 - **层次清晰**: 目录结构反映 API 的逻辑结构
 
+## 最新更新
+
+### 组件架构优化 (2024)
+
+最近进行了组件架构优化，确保所有定义的组件都被正确使用：
+
+- **移除未使用组件**: 删除了通用的 `ApiResponse` 组件
+- **具体类型优先**: 统一使用具体的响应类型 (`AuthApiResponse`, `UserApiResponse`, `SimpleApiResponse`)
+- **Lint 合规**: 通过所有 Redocly lint 检查，达到质量标准
+- **文档更新**: 完善相关文档说明
+
+这些改进提升了API文档的质量和维护性，同时确保更好的开发体验。
+
 ## 开发指南
 
 ### 添加新的 API 端点
 
 1. **创建路径文件**:
    ```bash
-   touch openapi/paths/api_v1_new_endpoint.yaml
+   touch openapi-core/paths/api_v1_new_endpoint.yaml
    ```
 
 2. **定义端点**:
@@ -122,24 +152,42 @@ components:
      summary: 端点描述
      operationId: NewEndpoint
      requestBody:
-       $ref: ../components/requestBodies/NewRequest.yaml
+       required: true
+       content:
+         application/json:
+           schema:
+             $ref: ../components/schemas/NewRequest.yaml
      responses:
        '200':
-         $ref: ../components/responses/SuccessResponse.yaml
+         description: 操作结果
+         content:
+           application/json:
+             schema:
+               # 根据业务类型选择合适的响应类型
+               $ref: ../components/schemas/SimpleApiResponse.yaml
    ```
 
 3. **添加到主文件**:
    ```yaml
-   # 在 openapi.yaml 的 paths 部分添加
+   # 在 openapi-core/openapi.yaml 的 paths 部分添加
    /api/v1/new-endpoint:
      $ref: paths/api_v1_new_endpoint.yaml
+   ```
+
+4. **验证和构建**:
+   ```bash
+   # 验证规范文件
+   npm test
+   
+   # 重新构建文档
+   npm run build
    ```
 
 ### 定义数据模型
 
 1. **创建 Schema**:
    ```bash
-   touch openapi/components/schemas/NewModel.yaml
+   touch openapi-core/components/schemas/NewModel.yaml
    ```
 
 2. **定义结构**:
@@ -180,6 +228,18 @@ components:
 - **组件复用**: 将通用组件放在 components 目录
 - **避免循环**: 注意避免循环引用问题
 
+#### 4. Lint 和质量控制
+
+- **避免未使用组件**: 确保所有定义的组件都被实际使用
+- **具体类型优先**: 使用具体的响应类型而非通用基类
+- **定期清理**: 定期审查和删除未使用的组件
+- **自动化验证**: 集成 CI/CD 自动运行 lint 检查
+
+**常见 Lint 错误和解决方案**:
+- `no-unused-components`: 删除未使用的组件或确保被正确引用
+- `operation-4xx-response`: 项目使用统一200响应，此规则已关闭
+- `security-defined`: 确保需要认证的端点正确配置 security
+
 ## 验证和测试
 
 ### Lint 检查
@@ -189,7 +249,7 @@ components:
 npm test
 
 # 详细检查
-npx redocly lint openapi/openapi.yaml
+npx redocly lint openapi-core/openapi.yaml
 ```
 
 ### 预览文档
@@ -199,7 +259,7 @@ npx redocly lint openapi/openapi.yaml
 npm start
 
 # 或直接使用 Redocly CLI
-npx redocly preview-docs openapi/openapi.yaml
+npx redocly preview-docs openapi-core/openapi.yaml
 ```
 
 ### 构建静态文档
