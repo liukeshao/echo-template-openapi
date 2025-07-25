@@ -22,7 +22,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/AuthResponse.yaml
+            $ref: ../components/schemas/AuthApiResponse.yaml
           examples:
             success:
               summary: 刷新成功

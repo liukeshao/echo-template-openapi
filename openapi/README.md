@@ -94,7 +94,7 @@ components:
    - `/api/v1/auth/login` → `api_v1_auth_login.yaml`
 
 2. **Schema 文件**: 使用 PascalCase 命名
-   - `UserInfo.yaml`, `AuthResponse.yaml`
+   - `UserInfo.yaml`, `AuthApiResponse.yaml`
 
 3. **响应文件**: 使用描述性名称
    - `Problem.yaml`, `SuccessResponse.yaml`

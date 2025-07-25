@@ -144,7 +144,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/AuthResponse.yaml
+          $ref: ../components/schemas/AuthApiResponse.yaml
 ```
 
 ### 在参数中使用头部

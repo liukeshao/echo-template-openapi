@@ -21,36 +21,7 @@ description: 错误响应
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: ../schemas/Response.yaml
-        - type: object
-          properties:
-            code:
-              type: integer
-              description: 错误码
-              example: 1001
-            message:
-              type: string
-              description: 错误消息
-              example: "参数验证失败"
-            data:
-              type: object
-              description: 错误详情
-              properties:
-                errors:
-                  type: array
-                  description: 具体错误列表
-                  items:
-                    type: object
-                    properties:
-                      field:
-                        type: string
-                        description: 错误字段
-                        example: "username"
-                      message:
-                        type: string
-                        description: 字段错误信息
-                        example: "用户名不能为空"
+      $ref: ../schemas/ErrorResponse.yaml
 ```
 
 ## 设计原则
@@ -82,12 +53,7 @@ responses:
     content:
       application/json:
         schema:
-          allOf:
-            - $ref: ../components/schemas/Response.yaml
-            - type: object
-              properties:
-                data:
-                  $ref: ../components/schemas/UserInfo.yaml
+          $ref: ../components/schemas/AuthApiResponse.yaml
   default:
     $ref: ../components/responses/Problem.yaml
 ```
@@ -96,121 +62,144 @@ responses:
 ```yaml
 responses:
   '200':
-    # 成功响应
-  '400':
-    description: 请求参数错误
+    # 成功响应使用具体的ApiResponse schema
+    description: 操作成功
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/Response.yaml
+          $ref: ../components/schemas/SimpleApiResponse.yaml
+        example:
+          code: 0
+          message: "操作成功"
+          data: null
+          timestamp: 1640995200000
+          request_id: "req_123456789"
+  default:
+    description: 错误响应
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/ErrorResponse.yaml
         example:
           code: 1001
           message: "参数验证失败"
-          data:
-            errors:
-              - field: "username"
-                message: "用户名不能为空"
-              - field: "email"
-                message: "邮箱格式不正确"
+          data: null
+          errors:
+            - "用户名不能为空"
+            - "邮箱格式不正确"
           timestamp: 1640995200000
-  '401':
-    description: 未认证
-    content:
-      application/json:
-        schema:
-          $ref: ../components/schemas/Response.yaml
-        example:
-          code: 401
-          message: "访问令牌无效或已过期"
-          timestamp: 1640995200000
+          request_id: "req_123456789"
 ```
 
 ## 常见响应模板
 
-### 成功响应
+### 认证类API响应
 ```yaml
-# SuccessResponse.yaml
-description: 操作成功
+# AuthApiResponse 示例
+description: 认证响应
 content:
   application/json:
     schema:
-      $ref: ../schemas/Response.yaml
+      $ref: ../schemas/AuthApiResponse.yaml
+    example:
+      code: 0
+      message: "登录成功"
+      data:
+        user:
+          id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+          username: "john_doe"
+          email: "john@example.com"
+        access_token: "eyJhbGciOiJIUzI1NiIs..."
+        refresh_token: "eyJhbGciOiJIUzI1NiIs..."
+        expires_at: 1641024000
+      timestamp: 1640995200000
+      request_id: "req_123456789"
+```
+
+### 用户信息类API响应
+```yaml
+# UserApiResponse 示例
+description: 用户信息响应
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/UserApiResponse.yaml
+    example:
+      code: 0
+      message: "获取用户信息成功"
+      data:
+        id: "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        username: "john_doe"
+        email: "john@example.com"
+        status: "active"
+        last_login_at: "2024-01-01T10:00:00Z"
+        created_at: "2024-01-01T10:00:00Z"
+      timestamp: 1640995200000
+      request_id: "req_123456789"
+```
+
+### 简单操作API响应
+```yaml
+# SimpleApiResponse 示例
+description: 简单操作响应
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/SimpleApiResponse.yaml
     example:
       code: 0
       message: "操作成功"
+      data: null
       timestamp: 1640995200000
+      request_id: "req_123456789"
 ```
 
-### 认证错误
+### 错误响应
 ```yaml
-# UnauthorizedResponse.yaml
-description: 认证失败
+# ErrorResponse 示例
+description: 错误响应
 content:
   application/json:
     schema:
-      $ref: ../schemas/Response.yaml
+      $ref: ../schemas/ErrorResponse.yaml
     example:
-      code: 401
-      message: "访问令牌无效或已过期"
+      code: 40101
+      message: "认证失败"
+      data: null
+      errors: ["访问令牌无效或已过期"]
       timestamp: 1640995200000
-```
-
-### 权限错误
-```yaml
-# ForbiddenResponse.yaml
-description: 权限不足
-content:
-  application/json:
-    schema:
-      $ref: ../schemas/Response.yaml
-    example:
-      code: 403
-      message: "权限不足，无法访问此资源"
-      timestamp: 1640995200000
-```
-
-### 资源不存在
-```yaml
-# NotFoundResponse.yaml
-description: 资源不存在
-content:
-  application/json:
-    schema:
-      $ref: ../schemas/Response.yaml
-    example:
-      code: 404
-      message: "请求的资源不存在"
-      timestamp: 1640995200000
+      request_id: "req_123456789"
 ```
 
 ## 错误码规范
 
 ### 错误码分类
 - **0**: 成功
-- **1xxx**: 客户端错误（参数、认证、权限等）
-- **2xxx**: 服务端错误（系统、数据库、第三方服务等）
+- **40001-49999**: 客户端错误（参数、认证、权限等）
+- **50001-59999**: 服务端错误（系统、数据库、第三方服务等）
 
 ### 具体错误码示例
 ```yaml
 # 认证相关错误
-401: "访问令牌无效或已过期"
-402: "刷新令牌无效或已过期"
-403: "权限不足"
+40101: "邮箱或密码错误"
+40102: "访问令牌无效或已过期"
+40103: "刷新令牌无效或已过期"
+40301: "权限不足"
 
 # 参数相关错误
-1001: "参数验证失败"
-1002: "缺少必需参数"
-1003: "参数格式错误"
+40001: "参数验证失败"
+40002: "缺少必需参数"
+40003: "参数格式错误"
 
 # 业务逻辑错误
-1101: "用户名已存在"
-1102: "邮箱已被注册"
-1103: "密码不正确"
+40901: "用户名已存在"
+40902: "邮箱已被注册"
+40903: "密码不正确"
 
 # 系统错误
-2001: "服务器内部错误"
-2002: "数据库连接失败"
-2003: "第三方服务不可用"
+50001: "服务器内部错误"
+50002: "数据库连接失败"
+50003: "第三方服务不可用"
 ```
 
 ## 扩展响应
@@ -223,78 +212,52 @@ content:
 
 ### 示例：分页响应
 ```yaml
-# PaginatedResponse.yaml
-description: 分页响应
-content:
-  application/json:
-    schema:
-      allOf:
-        - $ref: ../schemas/Response.yaml
-        - type: object
-          properties:
-            data:
-              type: object
-              properties:
-                items:
-                  type: array
-                  description: 数据列表
-                  items:
-                    type: object
-                pagination:
-                  type: object
-                  description: 分页信息
-                  properties:
-                    page:
-                      type: integer
-                      description: 当前页码
-                      example: 1
-                    size:
-                      type: integer
-                      description: 每页大小
-                      example: 20
-                    total:
-                      type: integer
-                      description: 总记录数
-                      example: 100
-                    pages:
-                      type: integer
-                      description: 总页数
-                      example: 5
+# PaginatedApiResponse.yaml
+allOf:
+  - $ref: ./SuccessResponse.yaml
+  - type: object
+    required:
+      - data
+    properties:
+      data:
+        type: object
+        required:
+          - items
+          - pagination
+        properties:
+          items:
+            type: array
+            description: 分页数据列表
+          pagination:
+            type: object
+            required:
+              - page
+              - size
+              - total
+              - total_pages
+            properties:
+              page:
+                type: integer
+                description: 当前页码
+                minimum: 1
+              size:
+                type: integer
+                description: 每页大小
+                minimum: 1
+              total:
+                type: integer
+                description: 总记录数
+                minimum: 0
+              total_pages:
+                type: integer
+                description: 总页数
+                minimum: 0
 ```
 
 ## 最佳实践
 
-### 1. 一致性
-- 保持所有响应格式的一致性
-- 使用统一的错误码体系
-- 提供清晰的错误消息
-
-### 2. 详细性
-- 包含足够的错误详情
-- 支持国际化的错误消息
-- 提供问题修复建议
-
-### 3. 可维护性
-- 集中管理通用响应
-- 避免重复定义
-- 定期审查和更新
-
-## 验证和测试
-
-```bash
-# 验证响应定义
-npx redocly lint openapi/components/responses/Problem.yaml
-
-# 验证完整规范
-npx redocly lint openapi/openapi.yaml
-```
-
-## 相关文档
-
-- **[数据模型指南](../schemas/README.md)**: 响应中使用的数据模型
-- **[组件管理指南](../README.md)**: 完整的组件管理说明
-- **[路径定义指南](../../paths/README.md)**: 如何在路径中使用响应
-
----
-
-> 💡 **提示**: 良好的响应定义能提供一致的错误处理体验，帮助开发者快速理解和处理 API 错误。 
+1. **响应统一性**: 所有API都使用相同的响应结构
+2. **错误处理**: 在 `errors` 数组中提供详细的错误信息
+3. **请求追踪**: 确保每个响应都包含 `request_id` 用于问题追踪
+4. **语义化错误码**: 使用有意义的错误码，便于客户端处理
+5. **文档示例**: 为每个响应提供完整的示例数据 

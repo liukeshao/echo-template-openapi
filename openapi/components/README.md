@@ -8,12 +8,12 @@
 components/
 ├── schemas/           # 数据模型定义
 │   ├── AuthOutput.yaml      # 认证输出模型
-│   ├── AuthResponse.yaml    # 认证响应模型
+│   ├── AuthApiResponse.yaml # 认证响应模型
 │   ├── LoginInput.yaml      # 登录输入模型
 │   ├── RegisterInput.yaml   # 注册输入模型
 │   ├── UserInfo.yaml        # 用户信息模型
-│   ├── UserResponse.yaml    # 用户响应模型
-│   ├── Response.yaml        # 通用响应模型
+│   ├── UserApiResponse.yaml # 用户响应模型
+│   ├── SimpleApiResponse.yaml # 简单操作响应模型
 │   └── ...
 ├── responses/         # 响应定义
 │   └── Problem.yaml         # 错误响应模型
@@ -79,7 +79,7 @@ properties:
 本项目使用统一的响应包装器：
 
 ```yaml
-# schemas/Response.yaml
+# schemas/BaseResponse.yaml
 type: object
 description: 统一响应格式
 required:
@@ -113,7 +113,7 @@ content:
   application/json:
     schema:
       allOf:
-        - $ref: ../schemas/Response.yaml
+        - $ref: ../schemas/BaseResponse.yaml
         - type: object
           properties:
             code:
@@ -181,12 +181,7 @@ responses:
     content:
       application/json:
         schema:
-          allOf:
-            - $ref: ../components/schemas/Response.yaml
-            - type: object
-              properties:
-                data:
-                  $ref: ../components/schemas/AuthOutput.yaml
+          $ref: ../components/schemas/AuthApiResponse.yaml
 ```
 
 ### 组合模式
@@ -198,7 +193,7 @@ responses:
 ```yaml
 # 扩展基础响应模型
 allOf:
-  - $ref: ../schemas/Response.yaml
+  - $ref: ../schemas/BaseResponse.yaml
   - type: object
     properties:
       data:

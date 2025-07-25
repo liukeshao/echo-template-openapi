@@ -131,12 +131,7 @@ post:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/AuthOutput.yaml
+            $ref: ../components/schemas/AuthApiResponse.yaml
           examples:
             success:
               summary: 登录成功示例
@@ -193,12 +188,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../components/schemas/Response.yaml
-              - type: object
-                properties:
-                  data:
-                    $ref: ../components/schemas/UserInfo.yaml
+            $ref: ../components/schemas/UserApiResponse.yaml
     default:
       $ref: ../components/responses/Problem.yaml
   x-codeSamples:
@@ -316,12 +306,7 @@ responses:
     content:
       application/json:
         schema:
-          allOf:
-            - $ref: ../components/schemas/Response.yaml
-            - type: object
-              properties:
-                data:
-                  $ref: ../components/schemas/UserInfo.yaml
+          $ref: ../components/schemas/UserApiResponse.yaml
 ```
 
 #### 错误响应
@@ -337,7 +322,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/Response.yaml
+          $ref: ../components/schemas/ErrorResponse.yaml
         example:
           code: 401
           message: "访问令牌无效或已过期"
