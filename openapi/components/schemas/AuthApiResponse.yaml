@@ -1,0 +1,9 @@
+oneOf:
+  - $ref: ./AuthSuccessResponse.yaml
+  - $ref: ./ErrorResponse.yaml
+discriminator:
+  propertyName: code
+description: |
+  认证相关API的统一响应格式
+  - 成功时(code=0)：data包含用户信息和令牌
+  - 失败时(code!=0)：data为null，errors包含错误详情 
