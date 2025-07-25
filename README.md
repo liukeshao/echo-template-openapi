@@ -12,6 +12,8 @@
 - ✅ **使用 Context7**: 利用最新的文档和最佳实践指导升级
 - ✅ **统一响应格式**: 采用统一的 API 响应结构设计
 - ✅ **模块化组织**: 清晰的目录结构和组件化设计
+- ✅ **Lint 质量控制**: 通过所有质量检查，无未使用组件警告
+- ✅ **分层响应架构**: 采用具体响应类型提供更好的类型安全
 
 ## 快速开始
 
@@ -67,7 +69,7 @@ echo-template-openapi/
 ├── docs/                    # 文档相关资源
 │   ├── index.html          # HTML 模板文件
 │   └── favicon.png         # 网站图标
-├── openapi/                # OpenAPI 规范文件
+├── openapi-core/           # OpenAPI 规范文件
 │   ├── openapi.yaml        # 主规范文件（入口点）
 │   ├── components/         # 可复用组件
 │   │   ├── schemas/        # 数据模型定义
@@ -75,6 +77,8 @@ echo-template-openapi/
 │   │   └── headers/        # 请求头定义
 │   ├── paths/              # API 路径定义
 │   └── code_samples/       # 代码示例
+├── dist/                   # 构建输出目录
+│   └── core@v1.yaml        # 打包后的OpenAPI文件
 ├── redocly.yaml            # Redocly CLI 配置
 └── package.json            # 项目依赖和脚本
 ```
@@ -93,17 +97,19 @@ echo-template-openapi/
 
 本项目采用模块化的文档组织方式，详细说明请参考各目录的 README：
 
-- **[OpenAPI 根目录](openapi/README.md)**: 主规范文件和整体结构
-- **[组件管理](openapi/components/README.md)**: 可复用组件的组织和使用
-- **[路径定义](openapi/paths/README.md)**: API 端点的定义规范
-- **[代码示例](openapi/code_samples/README.md)**: 多语言代码示例管理
+- **[OpenAPI 根目录](openapi-core/README.md)**: 主规范文件和整体结构
+- **[组件管理](openapi-core/components/README.md)**: 可复用组件的组织和使用
+- **[路径定义](openapi-core/paths/README.md)**: API 端点的定义规范
+- **[代码示例](openapi-core/code_samples/README.md)**: 多语言代码示例管理
 
 ### 添加新的 API 端点
 
-1. 在 `openapi/paths/` 目录下创建新的 YAML 文件
-2. 在 `openapi/openapi.yaml` 中添加路径引用
+1. 在 `openapi-core/paths/` 目录下创建新的 YAML 文件
+2. 在 `openapi-core/openapi.yaml` 中添加路径引用
 3. 定义相关的 schemas 和 responses
 4. 添加代码示例（可选）
+5. 运行 `npm test` 验证无 lint 错误
+6. 运行 `npm run build` 重新构建文档
 
 ### Schema 设计原则
 
@@ -126,16 +132,32 @@ echo-template-openapi/
 
 ### 响应格式
 
-所有 API 响应都使用统一格式：
+所有 API 响应都使用统一格式，根据不同业务场景采用对应的响应类型：
 
+#### 基础响应结构
 ```json
 {
   "code": 0,           // 0=成功，非0=错误
   "message": "成功",    // 响应消息
   "data": {},          // 响应数据（可选）
-  "timestamp": 1234567890
+  "timestamp": 1234567890,
+  "request_id": "req_123"  // 请求追踪ID
 }
 ```
+
+#### 响应类型分类
+
+1. **AuthApiResponse** - 认证相关接口响应
+   - 用于：注册、登录、刷新令牌
+   - data 包含：用户信息、访问令牌、刷新令牌
+
+2. **UserApiResponse** - 用户信息相关接口响应  
+   - 用于：获取用户信息、更新用户名、更新邮箱
+   - data 包含：用户详细信息
+
+3. **SimpleApiResponse** - 简单操作接口响应
+   - 用于：登出、修改密码等
+   - data 为 null（仅返回操作结果）
 
 ### 认证机制
 
@@ -159,17 +181,26 @@ Authorization: Bearer <access_token>
 3. **版本管理**: 合理使用版本控制
 4. **标签组织**: 使用标签和标签组组织 API
 
+#### 组件使用
+
+1. **避免未使用组件**: 定义的所有组件都应该被引用，避免 lint 错误
+2. **具体响应类型**: 优先使用具体的响应类型（如 AuthApiResponse）而非通用类型
+3. **组件复用**: 充分利用 `$ref` 引用复用组件
+4. **定期清理**: 定期检查和清理未使用的组件
+
 ### 性能优化
 
 1. **模块化**: 将大型规范分解为小文件
 2. **引用复用**: 使用 `$ref` 避免重复
 3. **构建优化**: 利用 Redocly 的构建优化功能
+4. **Lint 检查**: 运行 `npm test` 确保规范质量
 
 ### 团队协作
 
 1. **代码审查**: 对文档变更进行审查
 2. **自动化**: 使用 CI/CD 自动验证和部署
 3. **文档同步**: 保持文档与代码同步
+4. **质量控制**: 确保所有变更都通过 lint 检查
 
 ## 部署
 
