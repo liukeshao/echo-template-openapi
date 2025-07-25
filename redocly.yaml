@@ -2,22 +2,24 @@
 apis:
   echo-template@v1: 
     root: openapi/openapi.yaml
+    theme:
+      openapi:
+        htmlTemplate: ./docs/index.html
+        expandResponses: "all"
+        sortPropsAlphabetically: true 
+        theme:
+          colors:
+            primary:
+              main: "#32329f"
+        generateCodeSamples:
+          languages:  # Array of language config objects; indicates in which languages to generate code samples.
+            - lang: curl
+
 extends:
   - recommended
+
 rules:
   no-unused-components: error
   no-server-example.com: off
   operation-4xx-response: off  # 关闭，项目使用统一 200 响应
   security-defined: error
-theme:
-  openapi:
-    htmlTemplate: ./docs/index.html
-    expandResponses: "all"
-    sortPropsAlphabetically: true 
-    theme:
-      colors:
-        primary:
-          main: "#32329f"
-    generateCodeSamples:
-      languages:  # Array of language config objects; indicates in which languages to generate code samples.
-        - lang: curl
