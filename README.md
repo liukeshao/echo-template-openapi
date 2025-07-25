@@ -1,7 +1,8 @@
-# Echo Template OpenAPI
+# OpenAPI Template 
 
-> **🎉 已升级到 Redocly CLI 2.0.0**  
-> 项目已成功升级到最新的 Redocly CLI 2.0.0 版本，享受更好的性能和稳定性！
+## 项目简介
+
+这是一个 OpenAPI 模板项目，采用最新的 Redocly CLI 2.0.0 工具链，提供了完整的 API 文档管理解决方案。项目遵循 OpenAPI 3.1.0 规范，支持现代化的 API 开发工作流。
 
 ## 升级亮点
 
@@ -9,256 +10,199 @@
 - ✅ **配置兼容性**: 配置文件已调整为符合2.0版本规范
 - ✅ **所有功能正常**: lint、preview-docs、build-docs、bundle 等命令都已验证可用
 - ✅ **使用 Context7**: 利用最新的文档和最佳实践指导升级
+- ✅ **统一响应格式**: 采用统一的 API 响应结构设计
+- ✅ **模块化组织**: 清晰的目录结构和组件化设计
 
 ## 快速开始
 
-### Install
+### 环境要求
 
-1. Install [Node JS](https://nodejs.org/).
-2. Clone this repo and run `npm install` in the repo root.
+- [Node.js](https://nodejs.org/) v16.0.0 或更高版本
+- npm 7.0.0 或更高版本
 
-### Usage
+### 安装
+
+```bash
+# 克隆项目
+git clone <repository-url>
+cd echo-template-openapi
+
+# 安装依赖
+npm install
+```
+
+### 使用方法
 
 #### `npm start`
-Starts the reference docs preview server.
+启动文档预览服务器，支持热重载
+```bash
+npm start
+# 访问 http://localhost:8080 查看文档
+```
 
 #### `npm run build`
-Bundles the definition to the dist folder.
+构建静态文档到 dist 目录
+```bash
+npm run build
+# 输出文件: dist/index.html
+```
 
 #### `npm test`
-Validates the definition.
-
-## Contribution Guide
-
-Below is a sample contribution guide. The tools
-in the repository don't restrict you to any
-specific structure. Adjust the contribution guide
-to match your own structure. However, if you
-don't have a structure in mind, this is a
-good place to start.
-
-Update this contribution guide if you
-adjust the file/folder organization.
-
-The `.redocly.yaml` controls settings for various
-tools including the lint tool and the reference
-docs engine.  Open it to find examples and
-[read the docs](https://redocly.com/docs/cli/configuration/)
-for more information.
-
-
-### Schemas
-
-#### Adding Schemas
-
-1. Navigate to the `openapi/components/schemas` folder.
-2. Add a file named as you wish to name the schema.
-3. Define the schema.
-4. Refer to the schema using the `$ref` (see example below).
-
-##### Example Schema
-This is a very simple schema example:
-```yaml
-type: string
-description: The resource ID. Defaults to UUID v4
-maxLength: 50
-example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
-```
-This is a more complex schema example:
-```yaml
-type: object
-properties:
-  id:
-    description: The customer identifier string
-    readOnly: true
-    allOf:
-      - $ref: ./ResourceId.yaml
-  websiteId:
-    description: The website's ID
-    allOf:
-      - $ref: ./ResourceId.yaml
-  paymentToken:
-    type: string
-    writeOnly: true
-    description: |
-      A write-only payment token; if supplied, it will be converted into a
-      payment instrument and be set as the `defaultPaymentInstrument`. The
-      value of this property will override the `defaultPaymentInstrument`
-      in the case that both are supplied. The token may only be used once
-      before it is expired.
-  defaultPaymentInstrument:
-    $ref: ./PaymentInstrument.yaml
-  createdTime:
-    description: The customer created time
-    allOf:
-      - $ref: ./ServerTimestamp.yaml
-  updatedTime:
-    description: The customer updated time
-    allOf:
-      - $ref: ./ServerTimestamp.yaml
-  tags:
-    description: A list of customer's tags
-    readOnly: true
-    type: array
-    items:
-      $ref: ./Tags/Tag.yaml
-  revision:
-    description: >
-      The number of times the customer data has been modified.
-
-      The revision is useful when analyzing webhook data to determine if the
-      change takes precedence over the current representation.
-    type: integer
-    readOnly: true
-  _links:
-    type: array
-    description: The links related to resource
-    readOnly: true
-    minItems: 3
-    items:
-      anyOf:
-        - $ref: ./Links/SelfLink.yaml
-        - $ref: ./Links/NotesLink.yaml
-        - $ref: ./Links/DefaultPaymentInstrumentLink.yaml
-        - $ref: ./Links/LeadSourceLink.yaml
-        - $ref: ./Links/WebsiteLink.yaml
-  _embedded:
-    type: array
-    description: >-
-      Any embedded objects available that are requested by the `expand`
-      querystring parameter.
-    readOnly: true
-    minItems: 1
-    items:
-      anyOf:
-        - $ref: ./Embeds/LeadSourceEmbed.yaml
-
+验证 OpenAPI 定义文件的正确性
+```bash
+npm test
+# 运行 lint 检查和规范验证
 ```
 
-If you have an JSON example, you can convert it to JSON schema using Redocly's [JSON to JSON schema tool](https://redocly.com/tools/json-to-json-schema/).
-
-##### Using the `$ref`
-
-Notice in the complex example above the schema definition itself has `$ref` links to other schemas defined.
-
-Here is a small excerpt with an example:
-
-```yaml
-defaultPaymentInstrument:
-  $ref: ./PaymentInstrument.yaml
+#### `npm run preview`
+预览构建后的文档
+```bash
+npm run preview
 ```
 
-The value of the `$ref` is the path to the other schema definition.
+## 项目结构
 
-You may use `$ref`s to compose schema from other existing schema to avoid duplication.
-
-You will use `$ref`s to reference schema from your path definitions.
-
-#### Editing Schemas
-
-1. Navigate to the `openapi/components/schemas` folder.
-2. Open the file you wish to edit.
-3. Edit.
-
-### Paths
-
-#### Adding a Path
-
-1. Navigate to the `openapi/paths` folder.
-2. Add a new YAML file named like your URL endpoint except replacing `/` with `_` (or whichever character you prefer) and putting path parameters into curly braces like `{example}`.
-3. Add the path and a ref to it inside of your `openapi.yaml` file inside of the `openapi` folder.
-
-Example addition to the `openapi.yaml` file:
-```yaml
-'/customers/{id}':
-  $ref: './paths/customers_{id}.yaml'
+```
+echo-template-openapi/
+├── docs/                    # 文档相关资源
+│   ├── index.html          # HTML 模板文件
+│   └── favicon.png         # 网站图标
+├── openapi/                # OpenAPI 规范文件
+│   ├── openapi.yaml        # 主规范文件（入口点）
+│   ├── components/         # 可复用组件
+│   │   ├── schemas/        # 数据模型定义
+│   │   ├── responses/      # 响应定义
+│   │   └── headers/        # 请求头定义
+│   ├── paths/              # API 路径定义
+│   └── code_samples/       # 代码示例
+├── redocly.yaml            # Redocly CLI 配置
+└── package.json            # 项目依赖和脚本
 ```
 
-Here is an example of a YAML file named `customers_{id}.yaml` in the `paths` folder:
+## 贡献指南
 
-```yaml
-get:
-  tags:
-    - Customers
-  summary: Retrieve a list of customers
-  operationId: GetCustomerCollection
-  description: |
-    You can have a markdown description here.
-  parameters:
-    - $ref: ../components/parameters/collectionLimit.yaml
-    - $ref: ../components/parameters/collectionOffset.yaml
-    - $ref: ../components/parameters/collectionFilter.yaml
-    - $ref: ../components/parameters/collectionQuery.yaml
-    - $ref: ../components/parameters/collectionExpand.yaml
-    - $ref: ../components/parameters/collectionFields.yaml
-  responses:
-    '200':
-      description: A list of Customers was retrieved successfully
-      headers:
-        Rate-Limit-Limit:
-          $ref: ../components/headers/Rate-Limit-Limit.yaml
-        Rate-Limit-Remaining:
-          $ref: ../components/headers/Rate-Limit-Remaining.yaml
-        Rate-Limit-Reset:
-          $ref: ../components/headers/Rate-Limit-Reset.yaml
-        Pagination-Total:
-          $ref: ../components/headers/Pagination-Total.yaml
-        Pagination-Limit:
-          $ref: ../components/headers/Pagination-Limit.yaml
-        Pagination-Offset:
-          $ref: ../components/headers/Pagination-Offset.yaml
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: ../components/schemas/Customer.yaml
-        text/csv:
-          schema:
-            type: array
-            items:
-              $ref: ../components/schemas/Customer.yaml
-    '401':
-      $ref: ../components/responses/AccessForbidden.yaml
-  x-code-samples:
-    - lang: PHP
-      source:
-        $ref: ../code_samples/PHP/customers/get.php
-post:
-  tags:
-    - Customers
-  summary: Create a customer (without an ID)
-  operationId: PostCustomer
-  description: Another markdown description here.
-  requestBody:
-    $ref: ../components/requestBodies/Customer.yaml
-  responses:
-    '201':
-      $ref: ../components/responses/Customer.yaml
-    '401':
-      $ref: ../components/responses/AccessForbidden.yaml
-    '409':
-      $ref: ../components/responses/Conflict.yaml
-    '422':
-      $ref: ../components/responses/InvalidDataError.yaml
-  x-code-samples:
-    - lang: PHP
-      source:
-        $ref: ../code_samples/PHP/customers/post.php
+### 开发工作流
+
+1. **分支管理**: 从 `main` 分支创建功能分支
+2. **修改文档**: 根据下面的指南修改相应文件
+3. **验证**: 运行 `npm test` 确保无错误
+4. **预览**: 运行 `npm start` 预览文档效果
+5. **提交**: 创建 Pull Request
+
+### 文档结构说明
+
+本项目采用模块化的文档组织方式，详细说明请参考各目录的 README：
+
+- **[OpenAPI 根目录](openapi/README.md)**: 主规范文件和整体结构
+- **[组件管理](openapi/components/README.md)**: 可复用组件的组织和使用
+- **[路径定义](openapi/paths/README.md)**: API 端点的定义规范
+- **[代码示例](openapi/code_samples/README.md)**: 多语言代码示例管理
+
+### 添加新的 API 端点
+
+1. 在 `openapi/paths/` 目录下创建新的 YAML 文件
+2. 在 `openapi/openapi.yaml` 中添加路径引用
+3. 定义相关的 schemas 和 responses
+4. 添加代码示例（可选）
+
+### Schema 设计原则
+
+- 使用 `$ref` 引用复用组件
+- 提供清晰的描述和示例
+- 遵循命名约定
+- 添加适当的验证规则
+
+### 配置说明
+
+`redocly.yaml` 配置文件控制各种工具的行为，包括：
+
+- **Lint 规则**: 代码质量检查
+- **文档引擎**: 渲染选项和主题
+- **构建设置**: 输出格式和优化
+
+更多配置选项请参考 [Redocly CLI 文档](https://redocly.com/docs/cli/configuration/)。
+
+## API 设计规范
+
+### 响应格式
+
+所有 API 响应都使用统一格式：
+
+```json
+{
+  "code": 0,           // 0=成功，非0=错误
+  "message": "成功",    // 响应消息
+  "data": {},          // 响应数据（可选）
+  "timestamp": 1234567890
+}
 ```
 
-You'll see extensive usage of `$ref`s in this example to different types of components including schemas.
+### 认证机制
 
-You'll also notice `$ref`s to code samples.
+使用 Bearer Token 认证：
+```
+Authorization: Bearer <access_token>
+```
 
-### Code samples
+### 错误处理
 
-Automated code sample generations is enabled in the Redocly configuration file. Add manual code samples by the following process:
+- HTTP 状态码始终为 200
+- 错误通过 `code` 字段标识
+- 提供清晰的错误消息
 
-1. Navigate to the `openapi/code_samples` folder.
-2. Navigate to the `<language>` (e.g. PHP) sub-folder.
-3. Navigate to the `path` folder, and add ref to the code sample.
+## 最佳实践
 
-You can add languages by adding new folders at the appropriate path level.
+### 文档编写
 
-More details inside the `code_samples` folder README.
+1. **描述清晰**: 为每个端点、参数和响应提供清晰描述
+2. **示例丰富**: 包含请求和响应示例
+3. **版本管理**: 合理使用版本控制
+4. **标签组织**: 使用标签和标签组组织 API
+
+### 性能优化
+
+1. **模块化**: 将大型规范分解为小文件
+2. **引用复用**: 使用 `$ref` 避免重复
+3. **构建优化**: 利用 Redocly 的构建优化功能
+
+### 团队协作
+
+1. **代码审查**: 对文档变更进行审查
+2. **自动化**: 使用 CI/CD 自动验证和部署
+3. **文档同步**: 保持文档与代码同步
+
+## 部署
+
+### 静态部署
+
+```bash
+# 构建静态文件
+npm run build
+
+# 部署到静态托管服务
+# 例如: Netlify, Vercel, GitHub Pages
+```
+
+### Docker 部署
+
+```bash
+# 使用 Redocly 官方镜像
+docker run -p 8080:80 \
+  -v $(pwd)/openapi:/usr/share/nginx/html/spec \
+  -e SPEC_URL=spec/openapi.yaml \
+  redocly/redoc
+```
+
+## 许可证
+
+MIT License - 详见 [LICENSE](LICENSE) 文件。
+
+## 支持
+
+- 📧 邮箱: support@example.com
+- 📖 文档: [Redocly CLI 文档](https://redocly.com/docs/cli/)
+- 🐛 问题反馈: [GitHub Issues](../../issues)
+
+---
+
+> 💡 **提示**: 如需了解更多关于 OpenAPI 和 Redocly 的最佳实践，请查看各子目录的详细 README 文档。

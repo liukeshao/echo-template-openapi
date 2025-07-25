@@ -1,6 +1,8 @@
 allOf:
   - $ref: ./Response.yaml
   - type: object
+    required:
+      - data
     properties:
       data:
         type: 'null'

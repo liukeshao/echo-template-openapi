@@ -88,8 +88,3 @@ components:
       $ref: components/schemas/Response.yaml
     SuccessResponse:
       $ref: components/schemas/SuccessResponse.yaml
-    # 分页相关
-    PageInput:
-      $ref: components/schemas/PageInput.yaml
-    PageOutput:
-      $ref: components/schemas/PageOutput.yaml
